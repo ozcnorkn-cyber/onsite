@@ -6,7 +6,15 @@ import type { Lang } from "@/lib/i18n";
 import { t } from "@/lib/copy";
 import { MAX_QTY, useQuote } from "./quote-store";
 
-export function QuoteControls({ id, lang }: { id: string; lang: Lang }) {
+export function QuoteControls({
+  id,
+  lang,
+  fullWidth = false,
+}: {
+  id: string;
+  lang: Lang;
+  fullWidth?: boolean;
+}) {
   const copy = t(lang);
   const { lines, add } = useQuote();
   const line = lines.find((item) => item.id === id);
@@ -22,13 +30,13 @@ export function QuoteControls({ id, lang }: { id: string; lang: Lang }) {
 
   return (
     <form
-      className="flex flex-wrap items-end gap-3"
+      className={fullWidth ? "flex flex-col items-stretch gap-2" : "flex flex-wrap items-end gap-3"}
       onSubmit={(event) => {
         event.preventDefault();
         commit(shown);
       }}
     >
-      <label className="field w-28">
+      <label className={fullWidth ? "field" : "field w-28"}>
         {copy.quantity}
         <input
           type="number"
@@ -40,7 +48,7 @@ export function QuoteControls({ id, lang }: { id: string; lang: Lang }) {
           required
         />
       </label>
-      <button type="submit" className="btn">
+      <button type="submit" className={fullWidth ? "btn w-full" : "btn"}>
         {copy.add}
       </button>
       {line ? (

@@ -20,6 +20,9 @@ export type Product = {
   sizeEn: string;
   descPl: string;
   descEn: string;
+  /** Gross price text, only when a real rate exists. Never invented. */
+  pricePl?: string;
+  priceEn?: string;
 };
 
 export type Category = {

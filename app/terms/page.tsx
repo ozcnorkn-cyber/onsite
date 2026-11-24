@@ -5,9 +5,9 @@ import { getLang } from "@/lib/i18n";
 export default async function TermsPage() {
   const copy = t(await getLang());
   return (
-    <article className="mx-auto max-w-3xl px-5 py-16">
-      <h1 className="display text-4xl">{copy.termsTitle}</h1>
-      <p className="mt-6 text-lg leading-8">{copy.termsBody}</p>
+    <article className="mx-auto max-w-3xl px-5 py-12">
+      <h1 className="text-4xl font-medium tracking-tight">{copy.termsTitle}</h1>
+      <p className="mt-8 max-w-[36rem] text-xl leading-8">{copy.termsBody}</p>
       <p className="mt-4 text-sm text-steel-deep">{company.legalName}</p>
     </article>
   );

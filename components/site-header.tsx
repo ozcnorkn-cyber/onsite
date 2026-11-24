@@ -24,7 +24,7 @@ export function SiteHeader({ lang }: { lang: Lang }) {
 
   return (
     <header className="sticky top-0 z-20 border-b border-ink/15 bg-paper">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 md:gap-8 md:px-5">
+      <div className="flex items-center justify-between gap-3 px-5 py-3">
         <Link href="/" aria-label={copy.brand} className="shrink-0">
           <Wordmark />
         </Link>
@@ -37,8 +37,8 @@ export function SiteHeader({ lang }: { lang: Lang }) {
                 href={link.href}
                 className={
                   active
-                    ? "hidden text-sm font-semibold uppercase tracking-wide text-ink md:inline"
-                    : "hidden text-sm font-semibold uppercase tracking-wide text-steel-deep md:inline"
+                    ? "hidden text-[0.95rem] text-ink md:inline"
+                    : "hidden text-[0.95rem] text-steel-deep md:inline"
                 }
               >
                 {copy[link.pl]}
@@ -74,7 +74,7 @@ export function SiteHeader({ lang }: { lang: Lang }) {
             <Link
               key={link.href}
               href={link.href}
-              className="block py-2 text-sm font-semibold uppercase tracking-wide"
+              className="block py-2 text-lg"
               onClick={() => setOpenedAt(null)}
             >
               {copy[link.pl]}
