@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { QuoteScreen } from "@/components/quote-screen";
 import { categories } from "@/lib/catalogue";
 import { t } from "@/lib/copy";
 import { getLang } from "@/lib/i18n";
@@ -39,7 +38,6 @@ export default async function EquipmentPage() {
           );
         })}
       </ul>
-      <QuoteScreen lang={lang} />
     </div>
   );
 }

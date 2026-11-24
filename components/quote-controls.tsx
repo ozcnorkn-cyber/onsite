@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import type { Lang } from "@/lib/i18n";
 import { t } from "@/lib/copy";
@@ -43,9 +44,9 @@ export function QuoteControls({ id, lang }: { id: string; lang: Lang }) {
         {copy.add}
       </button>
       {line ? (
-        <span className="pb-3 text-sm text-steel-deep">
+        <Link href="/quote" className="pb-3 text-sm font-semibold text-ink underline">
           {copy.inQuote}: {line.qty}
-        </span>
+        </Link>
       ) : null}
     </form>
   );

@@ -19,7 +19,7 @@ const pl = {
   categoriesTitle: "Kategorie",
   equipmentTitle: "Sprzęt",
   equipmentIntro:
-    "Wybierz kategorię, a na stronie produktu podaj ilość. Wycena jest na dole tej strony. Bez cen.",
+    "Wybierz kategorię, a na stronie produktu podaj ilość. Moja wycena jest w nagłówku. Bez cen.",
   details: "Szczegóły",
   sizeLabel: "Wymiary",
   backCategory: "Wróć do kategorii",
@@ -102,7 +102,7 @@ const en: typeof pl = {
   categoriesTitle: "Categories",
   equipmentTitle: "Equipment",
   equipmentIntro:
-    "Choose a category, then set a quantity on the product page. The quote is at the bottom of this page. No prices.",
+    "Choose a category, then set a quantity on the product page. My Quote is in the header. No prices.",
   details: "Details",
   sizeLabel: "Size",
   backCategory: "Back to the category",

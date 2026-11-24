@@ -18,7 +18,7 @@ export default async function ContactPage() {
         {copy.phoneLabel}: {copy.phonePlaceholder}
       </p>
       <p className="mt-4">{copy.serviceArea}</p>
-      <Link href="/equipment#quote" className="btn mt-8">
+      <Link href="/quote" className="btn mt-8">
         {copy.contactCta}
       </Link>
     </article>
