@@ -19,7 +19,7 @@ export function QuoteScreen({ lang }: { lang: Lang }) {
   });
 
   return (
-    <section id="quote" className="scroll-mt-32 border-t border-ink bg-white">
+    <section id="quote" className="scroll-mt-32">
       <div className="mx-auto max-w-6xl px-5 py-14">
         <h2 className="display text-4xl md:text-5xl">{copy.quoteTitle}</h2>
         <p className="mt-4 max-w-xl text-sm text-steel-deep">{copy.quoteNote}</p>
@@ -39,13 +39,13 @@ export function QuoteScreen({ lang }: { lang: Lang }) {
                   key={line.id}
                   className="grid items-center gap-4 py-5 sm:grid-cols-[7rem_1fr_auto]"
                 >
-                  <div className="relative aspect-[4/3] bg-paper">
+                  <div className="relative aspect-[4/3]">
                     <Image
                       src={product.image}
                       alt=""
                       fill
                       sizes="112px"
-                      className="object-cover"
+                      className="plate object-contain object-left"
                     />
                   </div>
                   <div>

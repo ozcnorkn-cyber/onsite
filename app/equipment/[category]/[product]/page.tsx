@@ -37,20 +37,20 @@ export default async function ProductPage({
   const description = lang === "en" ? product.descEn : product.descPl;
 
   return (
-    <article className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-2">
-      <div className="relative aspect-[4/3] bg-white">
+    <article className="mx-auto grid max-w-6xl items-start gap-10 px-5 py-14 md:grid-cols-12">
+      <div className="relative aspect-[4/3] md:col-span-7">
         <Image
           src={product.image}
           alt={name}
           fill
           priority
-          sizes="(min-width: 768px) 50vw, 100vw"
-          className="object-contain"
+          sizes="(min-width: 768px) 55vw, 100vw"
+          className="plate object-contain object-left"
         />
       </div>
-      <div>
+      <div className="md:col-span-5 md:pt-10">
         <p className="kicker">{group}</p>
-        <h1 className="display mt-3 text-4xl md:text-5xl">{name}</h1>
+        <h1 className="display mt-3 text-4xl md:text-6xl">{name}</h1>
         {size ? (
           <p className="mt-6 text-sm">
             <span className="kicker">{copy.sizeLabel}</span>

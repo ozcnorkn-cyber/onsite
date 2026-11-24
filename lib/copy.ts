@@ -81,9 +81,11 @@ const pl = {
   copyRequest: "Kopiuj treść",
   copied: "Skopiowano",
   aboutTitle: "O nas",
-  aboutLead: "ON SITE wynajmuje wyposażenie na wydarzenia. Zaczynamy od stołów i krzeseł.",
+  historyMeta: "Warszawa · DYŻUREK sp. z o.o. · od sierpnia 2024",
+  aboutLead:
+    "ON SITE jest polską marką wynajmu DYŻUREK sp. z o.o. w Warszawie. Działamy od sierpnia 2024.",
   aboutBody:
-    "Stoi za nami doświadczenie z planu filmowego i logistyki na lokacji. Stąd nawyk terminów, transportu i porządku. Pracujemy z agencjami, firmami i klientami prywatnymi, nie tylko z produkcjami.",
+    "Wcześniej była praca na planie filmowym i logistyka na lokacji. Stąd nawyk terminów, transportu i porządku. Wynajmujemy wyposażenie na wydarzenia. Zaczynamy od stołów i krzeseł.",
   contactTitle: "Kontakt",
   contactBody:
     "Napisz, kiedy i gdzie jest wydarzenie oraz czego potrzebujesz. Odezwiemy się z dostępnością.",
@@ -185,9 +187,11 @@ const en: typeof pl = {
   copyRequest: "Copy text",
   copied: "Copied",
   aboutTitle: "About",
-  aboutLead: "ON SITE rents equipment for events. We start with tables and chairs.",
+  historyMeta: "Warsaw · DYŻUREK sp. z o.o. · since August 2024",
+  aboutLead:
+    "ON SITE is the Polish rental brand of DYŻUREK sp. z o.o. in Warsaw. We have operated since August 2024.",
   aboutBody:
-    "Behind that is experience from film sets and location logistics. That is where the habit of timing, transport and order comes from. We work with agencies, companies and private clients, not only with productions.",
+    "Before that came work on film sets and location logistics. That is where the habit of timing, transport and order comes from. We rent equipment for events. We start with tables and chairs.",
   contactTitle: "Contact",
   contactBody:
     "Write when and where the event is, and what you need. We will reply with availability.",

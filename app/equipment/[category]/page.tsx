@@ -18,32 +18,34 @@ export default async function CategoryPage({
   const name = lang === "en" ? category.en : category.pl;
 
   return (
-    <div>
-      <header className="border-b border-ink/15">
-        <div className="mx-auto max-w-6xl px-5 py-14">
-          <p className="kicker">{copy.navEquipment}</p>
-          <h1 className="display mt-4 text-4xl md:text-6xl">{name}</h1>
-        </div>
-      </header>
-      <ul className="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="mx-auto max-w-6xl px-5 py-14">
+      <p className="kicker">
+        <Link href="/equipment">{copy.navEquipment}</Link>
+      </p>
+      <h1 className="display mt-6 text-5xl md:text-7xl">{name}</h1>
+      <ul className="mt-12 border-t border-ink">
         {productsIn(category.id).map((product) => {
           const productName = lang === "en" ? product.en : product.pl;
+          const size = lang === "en" ? product.sizeEn : product.sizePl;
           return (
-            <li key={product.id}>
-              <Link href={`/equipment/${category.id}/${product.id}`} className="block">
-                <div className="relative aspect-[4/3] bg-white">
+            <li key={product.id} className="border-b border-ink">
+              <Link
+                href={`/equipment/${category.id}/${product.id}`}
+                className="grid items-end gap-4 py-6 sm:grid-cols-[9rem_1fr] md:grid-cols-[14rem_1fr]"
+              >
+                <span className="relative aspect-[4/3]">
                   <Image
                     src={product.image}
-                    alt={productName}
+                    alt=""
                     fill
-                    sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
-                    className="object-contain"
+                    sizes="220px"
+                    className="plate object-contain object-left"
                   />
-                </div>
-                <h2 className="mt-4 text-xl font-semibold">{productName}</h2>
-                <p className="mt-2 text-sm font-semibold uppercase tracking-wide underline">
-                  {copy.details}
-                </p>
+                </span>
+                <span>
+                  <span className="block text-2xl font-medium tracking-tight md:text-4xl">{productName}</span>
+                  {size ? <span className="mt-2 block text-sm">{size}</span> : null}
+                </span>
               </Link>
             </li>
           );
