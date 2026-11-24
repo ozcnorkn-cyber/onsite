@@ -72,7 +72,7 @@ export const products: Product[] = [
   },
   {
     id: "chair-plastic",
-    category: "meble",
+    category: "krzesla",
     pl: "Plastikowe krzesło składane",
     en: "Folding plastic chair",
     image: "/photos/chair-plastic.jpg",
@@ -84,7 +84,7 @@ export const products: Product[] = [
   },
   {
     id: "chair-wood",
-    category: "meble",
+    category: "krzesla",
     pl: "Drewniane krzesło składane",
     en: "Folding wooden chair",
     image: "/photos/chair-wood.jpg",
@@ -96,7 +96,7 @@ export const products: Product[] = [
   },
   {
     id: "chair-director",
-    category: "meble",
+    category: "meble-eventowe",
     pl: "Krzesło reżyserskie wysokie",
     en: "Tall director’s chair",
     image: "/photos/chair-director.jpg",
@@ -108,7 +108,7 @@ export const products: Product[] = [
   },
   {
     id: "chair-soft",
-    category: "meble",
+    category: "meble-eventowe",
     pl: "Miękkie krzesła",
     en: "Soft chairs",
     image: "/photos/chair-soft.jpg",
@@ -120,7 +120,7 @@ export const products: Product[] = [
   },
   {
     id: "bench",
-    category: "meble",
+    category: "dodatkowe",
     pl: "Składana ławka cateringowa",
     en: "Folding catering bench",
     image: "/photos/bench.jpg",
@@ -132,7 +132,7 @@ export const products: Product[] = [
   },
   {
     id: "table-180",
-    category: "meble",
+    category: "stoly",
     pl: "Duży stół składany 180 cm",
     en: "Large folding table, 180 cm",
     image: "/photos/table-180.jpg",
@@ -144,7 +144,7 @@ export const products: Product[] = [
   },
   {
     id: "table-120",
-    category: "meble",
+    category: "stoly",
     pl: "Średni stół składany 120 cm",
     en: "Medium folding table, 120 cm",
     image: "/photos/table-120.jpg",
@@ -385,16 +385,22 @@ export const products: Product[] = [
 ];
 
 export const categories: Category[] = [
-  { id: "meble", pl: "Meble", en: "Furniture", image: "/photos/table-180.jpg" },
+  { id: "stoly", pl: "Stoły", en: "Tables", image: "/photos/table-180.jpg" },
+  { id: "krzesla", pl: "Krzesła", en: "Chairs", image: "/photos/chair-plastic.jpg" },
+  { id: "meble-eventowe", pl: "Meble eventowe", en: "Event furniture", image: "/photos/chair-director.jpg" },
+  { id: "namioty", pl: "Namioty i zadaszenia", en: "Tents and canopies", image: "/photos/tent.jpg" },
+  { id: "dodatkowe", pl: "Wyposażenie dodatkowe", en: "Additional equipment", image: "/photos/bench.jpg" },
   { id: "scena", pl: "Scena", en: "Stage", image: "/photos/stage.jpg" },
   { id: "efekty", pl: "Efekty", en: "Effects", image: "/photos/hazer.png" },
   { id: "klimat", pl: "Klimat", en: "Climate", image: "/photos/fral.png" },
-  { id: "namioty", pl: "Namioty", en: "Tents", image: "/photos/tent.jpg" },
   { id: "lacznosc", pl: "Łączność", en: "Radios", image: "/photos/radio.jpg" },
   { id: "zasilanie", pl: "Zasilanie", en: "Power", image: "/photos/eu22.jpg" },
   { id: "catering", pl: "Catering", en: "Catering" },
   { id: "makeup", pl: "Makeup i garderoba", en: "Makeup and wardrobe" },
 ];
+
+/** Homepage and Oferta order. Empty categories stay hidden. */
+const offerOrder = ["stoly", "krzesla", "meble-eventowe", "namioty", "dodatkowe", "catering", "makeup"];
 
 export function categoryById(id: string) {
   return categories.find((category) => category.id === id);
@@ -406,6 +412,12 @@ export function productById(id: string) {
 
 export function productsIn(categoryId: string) {
   return products.filter((product) => product.category === categoryId);
+}
+
+export function navCategories() {
+  return offerOrder
+    .map((id) => categories.find((category) => category.id === id))
+    .filter((category): category is Category => category !== undefined && productsIn(category.id).length > 0);
 }
 
 function fold(value: string) {
@@ -430,7 +442,9 @@ export function catalogueMatches(query: string) {
   const needle = fold(query.trim());
   if (!needle) return { categories: [] as Category[], products: [] as Product[] };
   return {
-    categories: categories.filter((category) => fold(`${category.pl} ${category.en}`).includes(needle)),
+    categories: categories.filter(
+      (category) => productsIn(category.id).length > 0 && fold(`${category.pl} ${category.en}`).includes(needle),
+    ),
     products: products.filter((product) =>
       fold(
         [product.pl, product.en, product.sizePl, product.sizeEn, product.descPl, product.descEn].join(" "),

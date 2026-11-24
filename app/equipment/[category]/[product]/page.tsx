@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { QuoteControls } from "@/components/quote-controls";
 import { categoryById, productById } from "@/lib/catalogue";
+import { t } from "@/lib/copy";
 import { getLang } from "@/lib/i18n";
 
 export async function generateMetadata({
@@ -33,7 +34,8 @@ export default async function ProductPage({
   const group = lang === "en" ? category.en : category.pl;
   const size = lang === "en" ? product.sizeEn : product.sizePl;
   const description = lang === "en" ? product.descEn : product.descPl;
-  const price = lang === "en" ? product.priceEn : product.pricePl;
+  const copy = t(lang);
+  const price = (lang === "en" ? product.priceEn : product.pricePl) || copy.pricePreparing;
 
   return (
     <article className="mx-auto grid max-w-7xl items-start gap-8 px-4 py-6 md:grid-cols-2 md:px-5">
@@ -55,7 +57,7 @@ export default async function ProductPage({
         </p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">{name}</h1>
         {size ? <p className="mt-4 text-steel-deep">{size}</p> : null}
-        {price ? <p className="mt-3 text-lg font-medium">{price}</p> : null}
+        <p className="mt-3 text-lg font-medium">{price}</p>
         <p className="mt-4 max-w-md text-lg">{description}</p>
         <div className="mt-6">
           <QuoteControls id={product.id} lang={lang} />

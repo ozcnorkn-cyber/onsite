@@ -1,6 +1,6 @@
 import { CategoryTiles } from "@/components/category-tiles";
 import { ProductCard } from "@/components/product-card";
-import { searchProducts } from "@/lib/catalogue";
+import { navCategories, products, searchProducts } from "@/lib/catalogue";
 import { t } from "@/lib/copy";
 import { getLang } from "@/lib/i18n";
 
@@ -13,7 +13,8 @@ export default async function EquipmentPage({
   const query = q.trim();
   const lang = await getLang();
   const copy = t(lang);
-  const found = searchProducts(query);
+  const offerIds = new Set(navCategories().map((category) => category.id));
+  const found = query ? searchProducts(query) : products.filter((product) => offerIds.has(product.category));
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-6 md:px-5">

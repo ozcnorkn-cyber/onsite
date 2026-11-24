@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { CategoryTiles } from "@/components/category-tiles";
 import { ProductCard } from "@/components/product-card";
 import { categoryById, productsIn } from "@/lib/catalogue";
 import { t } from "@/lib/copy";
@@ -26,6 +27,9 @@ export default async function CategoryPage({
         </Link>
       </p>
       <h1 className="mt-2 text-3xl font-semibold tracking-tight">{name}</h1>
+      <div className="mt-5">
+        <CategoryTiles lang={lang} current={category.id} />
+      </div>
       {items.length === 0 ? (
         <p className="mt-8 text-lg">{copy.preparingOffer}</p>
       ) : (

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { categories, products } from "@/lib/catalogue";
+import { navCategories, products } from "@/lib/catalogue";
 import { siteOrigin } from "@/lib/content";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -12,7 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/contact",
     "/privacy",
     "/terms",
-    ...categories.map((category) => `/equipment/${category.id}`),
+    ...navCategories().map((category) => `/equipment/${category.id}`),
     ...products.map((product) => `/equipment/${product.category}/${product.id}`),
   ];
   return paths.map((path) => ({ url: `${origin}${path}` }));
