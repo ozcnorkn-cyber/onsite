@@ -37,7 +37,7 @@ export default async function HomePage() {
         {heroProduct ? (
           <Link
             href={`/equipment/${heroProduct.category}/${heroProduct.id}`}
-            className="relative block min-h-72 bg-white md:min-h-0"
+            className="clip-frame block min-h-72 bg-white md:min-h-0"
           >
             <Image
               src={heroProduct.image}
@@ -45,7 +45,7 @@ export default async function HomePage() {
               fill
               priority
               sizes="(min-width: 768px) 50vw, 100vw"
-              className="object-contain p-8"
+              className="object-contain"
             />
           </Link>
         ) : null}
@@ -56,7 +56,7 @@ export default async function HomePage() {
         <div className="mt-5">
           <CategoryTiles
             lang={lang}
-            ids={["meble", "scena", "efekty", "klimat", "namioty", "zasilanie"]}
+            ids={["meble", "scena", "efekty", "klimat", "namioty", "zasilanie", "catering", "makeup"]}
           />
         </div>
       </section>

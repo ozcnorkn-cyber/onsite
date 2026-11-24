@@ -81,8 +81,10 @@ export function SiteHeader({ lang }: { lang: Lang }) {
                         className="flex items-center gap-3 px-1 py-1"
                         onClick={() => setOfferOpen(false)}
                       >
-                        <span className="relative h-14 w-16 shrink-0 bg-white">
-                          <Image src={category.image} alt="" fill className="object-contain p-1" sizes="64px" />
+                        <span className="clip-frame h-14 w-16 shrink-0 bg-white">
+                          {category.image ? (
+                            <Image src={category.image} alt="" fill className="object-contain" sizes="64px" />
+                          ) : null}
                         </span>
                         <span className="text-sm font-semibold">{name}</span>
                       </Link>

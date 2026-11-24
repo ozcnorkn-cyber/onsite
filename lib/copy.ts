@@ -51,6 +51,7 @@ const pl = {
     "Produkcja filmowa",
   ],
   categoriesTitle: "Katalog",
+  preparingOffer: "Oferta jest w przygotowaniu.",
   equipmentTitle: "Oferta",
   equipmentIntro: "Meble eventowe. Stoły i krzesła. Kolejne kategorie dojdą do katalogu.",
   details: "Szczegóły",
@@ -173,6 +174,7 @@ const en: typeof pl = {
   whoTitle: "Who it is for",
   who: ["Companies", "Event agencies", "Organisers", "Private clients", "Film production"],
   categoriesTitle: "Catalogue",
+  preparingOffer: "This offer is being prepared.",
   equipmentTitle: "Offer",
   equipmentIntro:
     "Event furniture. Tables and chairs. Further categories will be added to the catalogue.",

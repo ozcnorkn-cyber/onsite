@@ -37,14 +37,14 @@ export default async function ProductPage({
 
   return (
     <article className="mx-auto grid max-w-7xl items-start gap-8 px-4 py-6 md:grid-cols-2 md:px-5">
-      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-white">
+      <div className="clip-frame aspect-[4/3] bg-white">
         <Image
           src={product.image}
           alt={name}
           fill
           priority
           sizes="(min-width: 768px) 50vw, 100vw"
-          className="object-contain p-6"
+          className="object-contain"
         />
       </div>
       <div className="md:pt-4">

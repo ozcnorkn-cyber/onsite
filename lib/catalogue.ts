@@ -29,7 +29,8 @@ export type Category = {
   id: string;
   pl: string;
   en: string;
-  image: string;
+  /** Real catalogue photo. Omitted when none exists. */
+  image?: string;
 };
 
 export const products: Product[] = [
@@ -391,6 +392,8 @@ export const categories: Category[] = [
   { id: "namioty", pl: "Namioty", en: "Tents", image: "/photos/tent.jpg" },
   { id: "lacznosc", pl: "Łączność", en: "Radios", image: "/photos/radio.jpg" },
   { id: "zasilanie", pl: "Zasilanie", en: "Power", image: "/photos/eu22.jpg" },
+  { id: "catering", pl: "Catering", en: "Catering" },
+  { id: "makeup", pl: "Makeup i garderoba", en: "Makeup and wardrobe" },
 ];
 
 export function categoryById(id: string) {

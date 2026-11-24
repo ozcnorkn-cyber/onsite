@@ -64,6 +64,21 @@ body {
   background: #d85a16;
 }
 
+.clip-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.clip-frame img {
+  transform: scale(1.14);
+}
+
+.clip-card {
+  overflow: hidden;
+  border-radius: 16px;
+}
+
 .btn-line {
   display: inline-flex;
   align-items: center;

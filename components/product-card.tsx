@@ -8,12 +8,10 @@ export function ProductCard({
   product,
   lang,
   large = false,
-  soft = false,
 }: {
   product: Product;
   lang: Lang;
   large?: boolean;
-  soft?: boolean;
 }) {
   const name = lang === "en" ? product.en : product.pl;
   const size = lang === "en" ? product.sizeEn : product.sizePl;
@@ -22,21 +20,15 @@ export function ProductCard({
   const group = category ? (lang === "en" ? category.en : category.pl) : "";
 
   return (
-    <article
-      className={
-        soft
-          ? "flex h-full flex-col rounded-2xl border border-ink/10 bg-white p-3 [&_.btn]:rounded-lg"
-          : "flex h-full flex-col"
-      }
-    >
+    <article className="clip-card flex h-full flex-col border border-ink/10 bg-white p-3 [&_.btn]:rounded-2xl">
       <Link href={`/equipment/${product.category}/${product.id}`} className="block">
-        <div className={soft ? "relative aspect-[4/3] overflow-hidden rounded-xl bg-paper" : "relative aspect-[4/3] bg-white"}>
+        <div className="clip-frame aspect-[4/3] bg-paper">
           <Image
             src={product.image}
             alt={name}
             fill
             sizes={large ? "(min-width: 1024px) 33vw, 100vw" : "(min-width: 1024px) 25vw, 50vw"}
-            className="object-contain p-4"
+            className="object-contain"
           />
         </div>
         {large ? <p className="mt-3 text-sm text-steel-deep">{group}</p> : null}
