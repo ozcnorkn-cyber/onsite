@@ -405,13 +405,33 @@ export function productsIn(categoryId: string) {
   return products.filter((product) => product.category === categoryId);
 }
 
+function fold(value: string) {
+  return value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "");
+}
+
 export function searchProducts(query: string) {
-  const needle = query.trim().toLowerCase();
+  const needle = fold(query.trim());
   if (!needle) return products;
   return products.filter((product) =>
-    [product.pl, product.en, product.sizePl, product.sizeEn, product.descPl, product.descEn]
-      .join(" ")
-      .toLowerCase()
-      .includes(needle),
+    fold([product.pl, product.en, product.sizePl, product.sizeEn, product.descPl, product.descEn].join(" ")).includes(
+      needle,
+    ),
   );
+}
+
+/** Live search. An empty query matches nothing. */
+export function catalogueMatches(query: string) {
+  const needle = fold(query.trim());
+  if (!needle) return { categories: [] as Category[], products: [] as Product[] };
+  return {
+    categories: categories.filter((category) => fold(`${category.pl} ${category.en}`).includes(needle)),
+    products: products.filter((product) =>
+      fold(
+        [product.pl, product.en, product.sizePl, product.sizeEn, product.descPl, product.descEn].join(" "),
+      ).includes(needle),
+    ),
+  };
 }
