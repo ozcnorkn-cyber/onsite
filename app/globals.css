@@ -93,6 +93,13 @@ body {
 
 .field input,
 .field select,
+.field textarea,
+input[type="search"] {
+  border-radius: 0;
+}
+
+.field input,
+.field select,
 .field textarea {
   border: 1px solid var(--ink);
   background: #fff;
@@ -113,6 +120,6 @@ body {
 
 @media (min-width: 768px) {
   .wordmark {
-    height: 3.6rem;
+    height: 3.1rem;
   }
 }

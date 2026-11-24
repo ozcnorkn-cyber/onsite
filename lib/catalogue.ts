@@ -404,3 +404,14 @@ export function productById(id: string) {
 export function productsIn(categoryId: string) {
   return products.filter((product) => product.category === categoryId);
 }
+
+export function searchProducts(query: string) {
+  const needle = query.trim().toLowerCase();
+  if (!needle) return products;
+  return products.filter((product) =>
+    [product.pl, product.en, product.sizePl, product.sizeEn, product.descPl, product.descEn]
+      .join(" ")
+      .toLowerCase()
+      .includes(needle),
+  );
+}

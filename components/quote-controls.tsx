@@ -10,10 +10,12 @@ export function QuoteControls({
   id,
   lang,
   fullWidth = false,
+  compact = false,
 }: {
   id: string;
   lang: Lang;
   fullWidth?: boolean;
+  compact?: boolean;
 }) {
   const copy = t(lang);
   const { lines, add } = useQuote();
@@ -30,13 +32,19 @@ export function QuoteControls({
 
   return (
     <form
-      className={fullWidth ? "flex flex-col items-stretch gap-2" : "flex flex-wrap items-end gap-3"}
+      className={
+        compact
+          ? "flex flex-wrap items-end gap-2 [&_input]:px-2 [&_input]:py-1.5"
+          : fullWidth
+            ? "flex flex-col items-stretch gap-2"
+            : "flex flex-wrap items-end gap-3"
+      }
       onSubmit={(event) => {
         event.preventDefault();
         commit(shown);
       }}
     >
-      <label className={fullWidth ? "field" : "field w-28"}>
+      <label className={compact ? "field w-[4.25rem] text-xs" : fullWidth ? "field" : "field w-28"}>
         {copy.quantity}
         <input
           type="number"
@@ -48,11 +56,27 @@ export function QuoteControls({
           required
         />
       </label>
-      <button type="submit" className={fullWidth ? "btn w-full" : "btn"}>
-        {copy.add}
+      <button
+        type="submit"
+        className={
+          compact
+            ? "btn min-h-0 flex-1 px-2 py-2 text-[0.68rem]"
+            : fullWidth
+              ? "btn w-full"
+              : "btn"
+        }
+      >
+        {compact ? copy.addShort : copy.add}
       </button>
       {line ? (
-        <Link href="/quote" className="pb-3 text-sm font-semibold text-ink underline">
+        <Link
+          href="/quote"
+          className={
+            compact
+              ? "basis-full text-xs font-semibold underline"
+              : "pb-3 text-sm font-semibold text-ink underline"
+          }
+        >
           {copy.inQuote}: {line.qty}
         </Link>
       ) : null}

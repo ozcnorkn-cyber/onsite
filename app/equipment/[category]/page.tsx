@@ -18,14 +18,14 @@ export default async function CategoryPage({
   const name = lang === "en" ? category.en : category.pl;
 
   return (
-    <div className="mx-auto max-w-6xl px-5 py-10">
+    <div className="mx-auto max-w-7xl px-4 py-6 md:px-5">
       <p className="text-sm">
-        <Link href="/equipment" className="underline">
+        <Link href="/equipment" className="font-semibold underline">
           {copy.navEquipment}
         </Link>
       </p>
-      <h1 className="mt-3 text-4xl font-medium tracking-tight">{name}</h1>
-      <ul className="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-4">
+      <h1 className="mt-2 text-3xl font-semibold tracking-tight">{name}</h1>
+      <ul className="mt-5 grid grid-cols-2 gap-x-3 gap-y-6 lg:grid-cols-4">
         {productsIn(category.id).map((product) => (
           <li key={product.id}>
             <ProductCard product={product} lang={lang} />

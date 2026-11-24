@@ -18,7 +18,7 @@ export function QuoteScreen({ lang }: { lang: Lang }) {
   });
 
   return (
-    <section id="quote" className="mx-auto max-w-6xl scroll-mt-28 px-5 py-10">
+    <section id="quote" className="mx-auto max-w-7xl scroll-mt-36 px-4 py-6 md:px-5">
       <h1 className="text-4xl font-medium tracking-tight">{copy.quoteTitle}</h1>
       <p className="mt-3 max-w-xl text-sm text-steel-deep">{copy.quoteNote}</p>
       {rows.length === 0 ? (

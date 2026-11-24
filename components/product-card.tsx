@@ -12,21 +12,21 @@ export function ProductCard({ product, lang }: { product: Product; lang: Lang })
   return (
     <article className="flex flex-col">
       <Link href={`/equipment/${product.category}/${product.id}`} className="block">
-        <div className="relative aspect-square bg-white">
+        <div className="relative aspect-[4/3] bg-white">
           <Image
             src={product.image}
             alt={name}
             fill
             sizes="(min-width: 1024px) 25vw, 50vw"
-            className="object-contain p-4"
+            className="object-contain p-2"
           />
         </div>
-        <h3 className="mt-3 text-base font-medium leading-snug">{name}</h3>
+        <h3 className="mt-2 text-[0.95rem] font-semibold leading-tight">{name}</h3>
       </Link>
-      {size ? <p className="mt-1 text-sm text-steel-deep">{size}</p> : null}
-      {price ? <p className="mt-1 text-sm font-medium">{price}</p> : null}
-      <div className="mt-3">
-        <QuoteControls id={product.id} lang={lang} fullWidth />
+      {size ? <p className="mt-1 text-xs text-steel-deep">{size}</p> : null}
+      {price ? <p className="mt-1 text-sm font-semibold">{price}</p> : null}
+      <div className="mt-2">
+        <QuoteControls id={product.id} lang={lang} compact />
       </div>
     </article>
   );

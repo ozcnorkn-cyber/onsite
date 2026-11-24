@@ -8,7 +8,7 @@ export function SiteFooter({ lang }: { lang: Lang }) {
   const city = lang === "en" ? company.cityEn : company.cityPl;
 
   return (
-    <footer className="px-5 pb-12 pt-20 text-sm leading-6">
+    <footer className="mx-auto max-w-7xl px-4 pb-12 pt-16 text-sm leading-6 md:px-5">
       <p>
         {company.legalName}, {city}, {copy.since}
       </p>

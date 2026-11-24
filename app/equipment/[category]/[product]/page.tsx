@@ -36,24 +36,24 @@ export default async function ProductPage({
   const price = lang === "en" ? product.priceEn : product.pricePl;
 
   return (
-    <article className="mx-auto grid max-w-6xl items-start gap-10 px-5 py-10 md:grid-cols-2">
-      <div className="relative aspect-square bg-white">
+    <article className="mx-auto grid max-w-7xl items-start gap-8 px-4 py-6 md:grid-cols-2 md:px-5">
+      <div className="relative aspect-[4/3] bg-white">
         <Image
           src={product.image}
           alt={name}
           fill
           priority
           sizes="(min-width: 768px) 50vw, 100vw"
-          className="object-contain p-8"
+          className="object-contain p-6"
         />
       </div>
-      <div>
+      <div className="md:pt-4">
         <p className="text-sm">
-          <Link href={`/equipment/${category.id}`} className="underline">
+          <Link href={`/equipment/${category.id}`} className="font-semibold underline">
             {group}
           </Link>
         </p>
-        <h1 className="mt-3 text-4xl font-medium tracking-tight">{name}</h1>
+        <h1 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">{name}</h1>
         {size ? <p className="mt-4 text-steel-deep">{size}</p> : null}
         {price ? <p className="mt-3 text-lg font-medium">{price}</p> : null}
         <p className="mt-4 max-w-md text-lg">{description}</p>
