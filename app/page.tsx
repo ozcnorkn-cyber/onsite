@@ -22,12 +22,12 @@ export default async function HomePage() {
           </div>
           <div className="relative aspect-[4/3] bg-white">
             <Image
-              src="/photos/generator.jpg"
+              src="/photos/eu22.jpg"
               alt=""
               fill
               priority
               sizes="(min-width: 768px) 50vw, 100vw"
-              className="object-cover"
+              className="object-contain"
             />
           </div>
         </div>
@@ -40,14 +40,14 @@ export default async function HomePage() {
               const name = lang === "en" ? category.en : category.pl;
               return (
                 <li key={category.id}>
-                  <Link href={`/equipment#${category.id}`} className="block">
+                  <Link href={`/equipment/${category.id}`} className="block">
                     <div className="relative aspect-[4/3] bg-white">
                       <Image
                         src={category.image}
                         alt=""
                         fill
                         sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
-                        className="object-cover"
+                        className="object-contain"
                       />
                     </div>
                     <p className="mt-3 text-lg font-semibold uppercase tracking-wide">

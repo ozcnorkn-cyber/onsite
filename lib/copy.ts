@@ -19,7 +19,10 @@ const pl = {
   categoriesTitle: "Kategorie",
   equipmentTitle: "Sprzęt",
   equipmentIntro:
-    "Pozycje do wyceny. W katalogu nie ma cen. Wycena jest na dole tej strony.",
+    "Wybierz kategorię, a na stronie produktu podaj ilość. Wycena jest na dole tej strony. Bez cen.",
+  details: "Szczegóły",
+  sizeLabel: "Wymiary",
+  backCategory: "Wróć do kategorii",
   add: "Dodaj do wyceny",
   inQuote: "W wycenie",
   quoteTitle: "Moja wycena",
@@ -99,7 +102,10 @@ const en: typeof pl = {
   categoriesTitle: "Categories",
   equipmentTitle: "Equipment",
   equipmentIntro:
-    "Items for a quote. The catalogue has no prices. The quote is at the bottom of this page.",
+    "Choose a category, then set a quantity on the product page. The quote is at the bottom of this page. No prices.",
+  details: "Details",
+  sizeLabel: "Size",
+  backCategory: "Back to the category",
   add: "Add to quote",
   inQuote: "In your quote",
   quoteTitle: "My Quote",

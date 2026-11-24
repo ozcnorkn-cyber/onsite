@@ -17,6 +17,13 @@ const empty: Line[] = [];
 let cacheRaw = "";
 let cacheLines: Line[] = empty;
 
+export const MAX_QTY = 999;
+
+export function clamp(qty: number) {
+  if (!Number.isFinite(qty)) return 1;
+  return Math.min(MAX_QTY, Math.max(1, Math.floor(qty)));
+}
+
 function parse(raw: string): Line[] {
   try {
     const parsed = JSON.parse(raw) as unknown;
@@ -31,7 +38,7 @@ function parse(raw: string): Line[] {
       )
       .map((line) => ({
         id: line.id,
-        qty: Math.min(99, Math.max(1, Math.floor(line.qty))),
+        qty: clamp(line.qty),
       }));
   } catch {
     return [];
@@ -67,8 +74,8 @@ function subscribe(onStoreChange: () => void) {
 
 type QuoteApi = {
   lines: Line[];
-  add: (id: string) => void;
-  increase: (id: string) => void;
+  add: (id: string, qty: number) => void;
+  setQty: (id: string, qty: number) => void;
   remove: (id: string) => void;
   count: number;
 };
@@ -77,33 +84,27 @@ const QuoteContext = createContext<QuoteApi | null>(null);
 
 export function QuoteProvider({ children }: { children: React.ReactNode }) {
   const lines = useSyncExternalStore(subscribe, read, () => empty);
-  const add = useCallback((id: string) => {
+  const add = useCallback((id: string, qty: number) => {
+    const next = clamp(qty);
     const current = read();
     const found = current.find((line) => line.id === id);
     if (found) {
-      write(
-        current.map((line) =>
-          line.id === id ? { ...line, qty: Math.min(99, line.qty + 1) } : line,
-        ),
-      );
+      write(current.map((line) => (line.id === id ? { ...line, qty: next } : line)));
       return;
     }
-    write([...current, { id, qty: 1 }]);
+    write([...current, { id, qty: next }]);
   }, []);
-  const increase = useCallback((id: string) => {
-    write(
-      read().map((line) =>
-        line.id === id ? { ...line, qty: Math.min(99, line.qty + 1) } : line,
-      ),
-    );
+  const setQty = useCallback((id: string, qty: number) => {
+    const next = clamp(qty);
+    write(read().map((line) => (line.id === id ? { ...line, qty: next } : line)));
   }, []);
   const remove = useCallback((id: string) => {
     write(read().filter((line) => line.id !== id));
   }, []);
   const count = lines.reduce((sum, line) => sum + line.qty, 0);
   const value = useMemo(
-    () => ({ lines, add, increase, remove, count }),
-    [lines, add, increase, remove, count],
+    () => ({ lines, add, setQty, remove, count }),
+    [lines, add, setQty, remove, count],
   );
   return <QuoteContext.Provider value={value}>{children}</QuoteContext.Provider>;
 }

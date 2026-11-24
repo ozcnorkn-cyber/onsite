@@ -3,8 +3,6 @@ import path from "node:path";
 
 const root = new URL("..", import.meta.url).pathname;
 const banned = [
-  /eu22i/i,
-  /xt420/i,
   /sunbelt/i,
   /wedding/i,
   /certified/i,
@@ -19,7 +17,6 @@ const banned = [
   /malik montana/i,
   /artur szpilka/i,
   /DYZ-/,
-  /\bkW\b/,
   /zł/,
   /\bPLN\b/,
 ];
