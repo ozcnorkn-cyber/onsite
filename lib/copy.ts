@@ -52,6 +52,7 @@ const pl = {
   ],
   categoriesTitle: "Katalog",
   preparingOffer: "Oferta jest w przygotowaniu.",
+  filterAll: "Wszystko",
   pricePreparing: "Cena w przygotowaniu",
   equipmentTitle: "Oferta",
   equipmentIntro: "Meble eventowe. Stoły i krzesła. Kolejne kategorie dojdą do katalogu.",
@@ -176,6 +177,7 @@ const en: typeof pl = {
   who: ["Companies", "Event agencies", "Organisers", "Private clients", "Film production"],
   categoriesTitle: "Catalogue",
   preparingOffer: "This offer is being prepared.",
+  filterAll: "All",
   pricePreparing: "Price in preparation",
   equipmentTitle: "Offer",
   equipmentIntro:

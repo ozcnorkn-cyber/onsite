@@ -19,48 +19,21 @@ const popularIds = [
 export default async function HomePage() {
   const lang = await getLang();
   const copy = t(lang);
-  const heroProduct = productById("table-180");
-  const plasticChairs = productById("chair-plastic");
-  const directorChair = productById("chair-director");
-  const nameOf = (product: { pl: string; en: string } | undefined) =>
-    product ? (lang === "en" ? product.en : product.pl) : "";
-  const heroName = nameOf(heroProduct) || copy.heroTitle;
   const popular = popularIds.map((id) => productById(id)).filter((product) => product !== undefined);
 
   return (
     <div>
-      <section className="relative h-[440px] overflow-hidden border-b border-ink bg-white">
-        <div className="absolute inset-y-0 right-0 flex w-[64%] items-end justify-end gap-1 pr-3">
-          <div className="relative h-[92%] w-[50%] overflow-hidden">
-            <Image
-              src="/photos/table-180.jpg"
-              alt={heroName}
-              fill
-              priority
-              sizes="40vw"
-              className="origin-bottom object-contain object-bottom scale-[1.7]"
-            />
-          </div>
-          <div className="relative h-[70%] w-[26%] overflow-hidden">
-            <Image
-              src="/photos/chair-plastic.jpg"
-              alt={nameOf(plasticChairs)}
-              fill
-              sizes="18vw"
-              className="origin-bottom object-contain object-bottom scale-[1.45]"
-            />
-          </div>
-          <div className="relative h-[78%] w-[22%] overflow-hidden">
-            <Image
-              src="/photos/chair-director.jpg"
-              alt={nameOf(directorChair)}
-              fill
-              sizes="16vw"
-              className="origin-bottom object-contain object-bottom scale-125"
-            />
-          </div>
-        </div>
-        <div className="relative z-10 flex h-full max-w-md flex-col justify-center px-4 md:px-8">
+      <section className="relative h-[440px] overflow-hidden border-b border-ink">
+        {/* stock: Pexels 16985136, a venue with tables and chairs. Not catalogue inventory. */}
+        <Image
+          src="/photos/stock-event-venue.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+        <div className="relative z-10 flex h-full max-w-md flex-col justify-center bg-gradient-to-r from-black/55 via-black/20 to-transparent px-4 text-white md:px-8">
           <p className="text-sm font-semibold">{copy.tagline}</p>
           <h1 className="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">{copy.heroTitle}</h1>
           <Link href="#kategorie" className="btn mt-6 w-fit">
@@ -72,7 +45,7 @@ export default async function HomePage() {
       <section id="kategorie" className="scroll-mt-28 mx-auto max-w-7xl px-4 py-6 md:px-5">
         <h2 className="text-3xl font-semibold tracking-tight">{copy.categoriesTitle}</h2>
         <div className="mt-4">
-          <CategoryTiles lang={lang} />
+          <CategoryTiles lang={lang} home />
         </div>
       </section>
 
@@ -120,7 +93,7 @@ export default async function HomePage() {
                 key={step}
                 className="border-b border-ink py-3 md:border-b-0 md:border-r md:px-5 md:first:pl-0 md:last:border-r-0 md:last:pr-0"
               >
-                <span className="text-2xl font-semibold">{index + 1}</span>
+                <HowIcon index={index} />
                 <p className="mt-3 text-base">{step}</p>
               </li>
             ))}
@@ -143,5 +116,43 @@ export default async function HomePage() {
         </div>
       </section>
     </div>
+  );
+}
+
+function HowIcon({ index }: { index: number }) {
+  const common = {
+    viewBox: "0 0 32 32",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.5,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    className: "h-7 w-7 text-ink",
+    "aria-hidden": true,
+  };
+  if (index === 0) {
+    return (
+      <svg {...common}>
+        <rect x="6" y="7" width="20" height="16" rx="1.5" />
+        <path d="M6 12h20M12 12v11" />
+      </svg>
+    );
+  }
+  if (index === 1) {
+    return (
+      <svg {...common}>
+        <path d="M5 20h15.5M7 20l2.5-5h9l3 5" />
+        <path d="M20.5 20h3.2l2.3-4H23" />
+        <circle cx="10" cy="22.5" r="1.6" />
+        <circle cx="19" cy="22.5" r="1.6" />
+      </svg>
+    );
+  }
+  return (
+    <svg {...common}>
+      <path d="M12 8H8.5A3.5 3.5 0 0 0 5 11.5v9A3.5 3.5 0 0 0 8.5 24H20" />
+      <path d="M18 5l5 5-5 5" />
+      <path d="M23 10H13" />
+    </svg>
   );
 }

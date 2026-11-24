@@ -4,7 +4,7 @@
  *
  * Not listed, because the site does not publish them:
  * white plastic folding chairs (the published plastic chair is a separate
- * line), gray-top tables, and separate eco and premium 3×3 tents.
+ * line), gray-top tables, and separate black and white 3×3 tents.
  * The published tent is one 3×3 m tent.
  */
 
@@ -16,6 +16,8 @@ export type Product = {
   image: string;
   /** dyzurek.com path. Not shown on the page. */
   source: string;
+  /** Filter on the parent category page. Not its own page. */
+  group?: string;
   sizePl: string;
   sizeEn: string;
   descPl: string;
@@ -31,6 +33,8 @@ export type Category = {
   en: string;
   /** Real catalogue photo. Omitted when none exists. */
   image?: string;
+  /** Same-page filters. Omitted when the category is one list. */
+  filters?: { id: string; pl: string; en: string }[];
 };
 
 export const products: Product[] = [
@@ -72,7 +76,8 @@ export const products: Product[] = [
   },
   {
     id: "chair-plastic",
-    category: "krzesla",
+    category: "meble-eventowe",
+    group: "krzesla",
     pl: "Plastikowe krzesło składane",
     en: "Folding plastic chair",
     image: "/photos/chair-plastic.jpg",
@@ -84,7 +89,8 @@ export const products: Product[] = [
   },
   {
     id: "chair-wood",
-    category: "krzesla",
+    category: "meble-eventowe",
+    group: "krzesla",
     pl: "Drewniane krzesło składane",
     en: "Folding wooden chair",
     image: "/photos/chair-wood.jpg",
@@ -97,6 +103,7 @@ export const products: Product[] = [
   {
     id: "chair-director",
     category: "meble-eventowe",
+    group: "krzesla",
     pl: "Krzesło reżyserskie wysokie",
     en: "Tall director’s chair",
     image: "/photos/chair-director.jpg",
@@ -109,6 +116,7 @@ export const products: Product[] = [
   {
     id: "chair-soft",
     category: "meble-eventowe",
+    group: "krzesla",
     pl: "Miękkie krzesła",
     en: "Soft chairs",
     image: "/photos/chair-soft.jpg",
@@ -120,7 +128,7 @@ export const products: Product[] = [
   },
   {
     id: "bench",
-    category: "dodatkowe",
+    category: "catering",
     pl: "Składana ławka cateringowa",
     en: "Folding catering bench",
     image: "/photos/bench.jpg",
@@ -132,7 +140,8 @@ export const products: Product[] = [
   },
   {
     id: "table-180",
-    category: "stoly",
+    category: "meble-eventowe",
+    group: "stoly",
     pl: "Duży stół składany 180 cm",
     en: "Large folding table, 180 cm",
     image: "/photos/table-180.jpg",
@@ -144,7 +153,8 @@ export const products: Product[] = [
   },
   {
     id: "table-120",
-    category: "stoly",
+    category: "meble-eventowe",
+    group: "stoly",
     pl: "Średni stół składany 120 cm",
     en: "Medium folding table, 120 cm",
     image: "/photos/table-120.jpg",
@@ -156,7 +166,8 @@ export const products: Product[] = [
   },
   {
     id: "stage-2x1",
-    category: "scena",
+    category: "technika",
+    group: "scena",
     pl: "Podest sceniczny 2×1 m",
     en: "Stage deck, 2×1 m",
     image: "/photos/stage.jpg",
@@ -167,8 +178,22 @@ export const products: Product[] = [
     descEn: "Modular stage deck.",
   },
   {
+    id: "pipe-drape",
+    category: "technika",
+    group: "scena",
+    pl: "Zestaw Pipe & Drape",
+    en: "Pipe and drape set",
+    image: "/photos/pipe-drape.jpg",
+    source: "/pipe-drape/",
+    sizePl: "Belki 1,9–3 m",
+    sizeEn: "Bars 1.9–3 m",
+    descPl: "Tło, podział przestrzeni albo kontrola światła. Do 5,1 m przy trzech pionowych rurach.",
+    descEn: "A backdrop, a room divider, or light control. Up to 5.1 m with three uprights.",
+  },
+  {
     id: "hazer-unique",
-    category: "efekty",
+    category: "technika",
+    group: "efekty",
     pl: "Hazer Look Solutions Unique 2.1",
     en: "Look Solutions Unique 2.1 hazer",
     image: "/photos/hazer.png",
@@ -180,7 +205,8 @@ export const products: Product[] = [
   },
   {
     id: "fog-ulanzi",
-    category: "efekty",
+    category: "technika",
+    group: "efekty",
     pl: "Ulanzi mini dymiarka",
     en: "Ulanzi mini fog machine",
     image: "/photos/fog-ulanzi.jpg",
@@ -192,7 +218,8 @@ export const products: Product[] = [
   },
   {
     id: "fog-1500",
-    category: "efekty",
+    category: "technika",
+    group: "efekty",
     pl: "Dymiarka 1500 W",
     en: "Fog machine, 1500 W",
     image: "/photos/fog-1500.jpg",
@@ -204,7 +231,8 @@ export const products: Product[] = [
   },
   {
     id: "fog-mf100",
-    category: "efekty",
+    category: "technika",
+    group: "efekty",
     pl: "Zamgławiacz termiczny MF-100",
     en: "MF-100 thermal fogger",
     image: "/photos/fog-mf.png",
@@ -382,25 +410,64 @@ export const products: Product[] = [
     descPl: "Zestaw słuchawkowy do rozmowy w obie strony.",
     descEn: "Headset system for two-way talk.",
   },
+  {
+    id: "cable-ramp",
+    category: "dodatkowe",
+    pl: "Kabel najazdowy",
+    en: "Cable ramp",
+    image: "/photos/cable-ramp.jpg",
+    source: "/kabel-najazdowy/",
+    sizePl: "",
+    sizeEn: "",
+    descPl: "Kabel najazdowy.",
+    descEn: "Cable ramp.",
+  },
+  {
+    id: "cones",
+    category: "dodatkowe",
+    pl: "Pachołek",
+    en: "Traffic cone",
+    image: "/photos/cones.jpg",
+    source: "/pacholki-drogowe/",
+    sizePl: "",
+    sizeEn: "",
+    descPl: "Pachołki drogowe do zabezpieczenia terenu nagrań.",
+    descEn: "Traffic cones for marking a shoot.",
+  },
 ];
 
 export const categories: Category[] = [
-  { id: "stoly", pl: "Stoły", en: "Tables", image: "/photos/table-180.jpg" },
-  { id: "krzesla", pl: "Krzesła", en: "Chairs", image: "/photos/chair-plastic.jpg" },
-  { id: "meble-eventowe", pl: "Meble eventowe", en: "Event furniture", image: "/photos/chair-director.jpg" },
-  { id: "namioty", pl: "Namioty i zadaszenia", en: "Tents and canopies", image: "/photos/tent.jpg" },
-  { id: "dodatkowe", pl: "Wyposażenie dodatkowe", en: "Additional equipment", image: "/photos/bench.jpg" },
-  { id: "scena", pl: "Scena", en: "Stage", image: "/photos/stage.jpg" },
-  { id: "efekty", pl: "Efekty", en: "Effects", image: "/photos/hazer.png" },
+  {
+    id: "meble-eventowe",
+    pl: "Meble eventowe",
+    en: "Event furniture",
+    image: "/photos/table-180.jpg",
+    filters: [
+      { id: "stoly", pl: "Stoły", en: "Tables" },
+      { id: "krzesla", pl: "Krzesła", en: "Chairs" },
+    ],
+  },
+  { id: "namioty", pl: "Namioty", en: "Tents", image: "/photos/tent.jpg" },
+  { id: "catering", pl: "Catering", en: "Catering", image: "/photos/bench.jpg" },
+  {
+    id: "technika",
+    pl: "Technika sceniczna",
+    en: "Stage equipment",
+    image: "/photos/stage.jpg",
+    filters: [
+      { id: "scena", pl: "Scena", en: "Stage" },
+      { id: "efekty", pl: "Efekty", en: "Effects" },
+    ],
+  },
+  { id: "dodatkowe", pl: "Wyposażenie dodatkowe", en: "Additional equipment", image: "/photos/cable-ramp.jpg" },
   { id: "klimat", pl: "Klimat", en: "Climate", image: "/photos/fral.png" },
   { id: "lacznosc", pl: "Łączność", en: "Radios", image: "/photos/radio.jpg" },
   { id: "zasilanie", pl: "Zasilanie", en: "Power", image: "/photos/eu22.jpg" },
-  { id: "catering", pl: "Catering", en: "Catering" },
   { id: "makeup", pl: "Makeup i garderoba", en: "Makeup and wardrobe" },
 ];
 
 /** Homepage and Oferta order. Empty categories stay hidden. */
-const offerOrder = ["stoly", "krzesla", "meble-eventowe", "namioty", "dodatkowe", "catering", "makeup"];
+const offerOrder = ["meble-eventowe", "namioty", "catering", "technika", "dodatkowe"];
 
 export function categoryById(id: string) {
   return categories.find((category) => category.id === id);
@@ -442,9 +509,12 @@ export function catalogueMatches(query: string) {
   const needle = fold(query.trim());
   if (!needle) return { categories: [] as Category[], products: [] as Product[] };
   return {
-    categories: categories.filter(
-      (category) => productsIn(category.id).length > 0 && fold(`${category.pl} ${category.en}`).includes(needle),
-    ),
+    categories: categories.filter((category) => {
+      const filters = (category.filters ?? []).map((filter) => `${filter.pl} ${filter.en}`).join(" ");
+      return (
+        productsIn(category.id).length > 0 && fold(`${category.pl} ${category.en} ${filters}`).includes(needle)
+      );
+    }),
     products: products.filter((product) =>
       fold(
         [product.pl, product.en, product.sizePl, product.sizeEn, product.descPl, product.descEn].join(" "),
