@@ -1,11 +1,13 @@
 /**
- * Event rental lines published on dyzurek.com. Photos are the hero images
- * from those pages, saved under public/photos. No stock counts.
+ * Event rental lines that have a page on dyzurek.com.
+ * Product photos are the hero images from those pages.
+ * Homepage category tiles use separate free stock photos.
+ * No stock counts and no prices.
  *
- * Not listed, because the site does not publish them:
- * white plastic folding chairs (the published plastic chair is a separate
- * line), gray-top tables, and separate black and white 3×3 tents.
- * The published tent is one 3×3 m tent.
+ * The 150 cm table has no page of its own. It is named in the
+ * Duży Dyżur Van and Średni Dyżur Van kit lists.
+ * The 3×3 tent page includes three side walls and a door.
+ * There is no separate page for walls or weights.
  */
 
 export type Product = {
@@ -13,7 +15,8 @@ export type Product = {
   category: string;
   pl: string;
   en: string;
-  image: string;
+  /** Omitted when the line has no photograph of its own. */
+  image?: string;
   /** dyzurek.com path. Not shown on the page. */
   source: string;
   /** Filter on the parent category page. Not its own page. */
@@ -22,6 +25,9 @@ export type Product = {
   sizeEn: string;
   descPl: string;
   descEn: string;
+  /** Extra fact that is not a description of the object. */
+  notePl?: string;
+  noteEn?: string;
   /** Gross price text, only when a real rate exists. Never invented. */
   pricePl?: string;
   priceEn?: string;
@@ -31,116 +37,18 @@ export type Category = {
   id: string;
   pl: string;
   en: string;
-  /** Real catalogue photo. Omitted when none exists. */
+  /** Homepage tile. Free stock, not a product cut-out. */
   image?: string;
+  /** Where the tile crop sits. Omitted keeps the centre. */
+  imagePosition?: string;
   /** Same-page filters. Omitted when the category is one list. */
   filters?: { id: string; pl: string; en: string }[];
 };
 
 export const products: Product[] = [
   {
-    id: "honda-eu22i",
-    category: "zasilanie",
-    pl: "Agregat Honda EU22i",
-    en: "Honda EU22i generator",
-    image: "/photos/eu22.jpg",
-    source: "/wynajem-agregatu-honda-eu22i-2-2-kw/",
-    sizePl: "2,2 kW",
-    sizeEn: "2.2 kW",
-    descPl: "Kompaktowy agregat inwertorowy.",
-    descEn: "Compact inverter generator.",
-  },
-  {
-    id: "honda-eu70is",
-    category: "zasilanie",
-    pl: "Agregat Honda EU70is",
-    en: "Honda EU70is generator",
-    image: "/photos/eu70.jpg",
-    source: "/1295-2/",
-    sizePl: "5,5 kW",
-    sizeEn: "5.5 kW",
-    descPl: "Agregat inwertorowy do większego zestawu.",
-    descEn: "Inverter generator for a larger setup.",
-  },
-  {
-    id: "dji-power-500",
-    category: "zasilanie",
-    pl: "Stacja zasilania DJI Power 500",
-    en: "DJI Power 500 power station",
-    image: "/photos/dji.jpg",
-    source: "/dji-power-500-stacja-zasilania/",
-    sizePl: "512 Wh, do 1000 W",
-    sizeEn: "512 Wh, up to 1000 W",
-    descPl: "Przenośna stacja zasilania, bez spalin.",
-    descEn: "Portable power station, with no exhaust.",
-  },
-  {
-    id: "chair-plastic",
-    category: "meble-eventowe",
-    group: "krzesla",
-    pl: "Plastikowe krzesło składane",
-    en: "Folding plastic chair",
-    image: "/photos/chair-plastic.jpg",
-    source: "/plastikowe-krzeslo-skladane/",
-    sizePl: "",
-    sizeEn: "",
-    descPl: "Składane krzesło plastikowe, do środka i na zewnątrz.",
-    descEn: "Folding plastic chair, for indoors and outdoors.",
-  },
-  {
-    id: "chair-wood",
-    category: "meble-eventowe",
-    group: "krzesla",
-    pl: "Drewniane krzesło składane",
-    en: "Folding wooden chair",
-    image: "/photos/chair-wood.jpg",
-    source: "/drewniane-krzeslo-skladane/",
-    sizePl: "",
-    sizeEn: "",
-    descPl: "Składane krzesło drewniane, do środka i na zewnątrz.",
-    descEn: "Folding wooden chair, for indoors and outdoors.",
-  },
-  {
-    id: "chair-director",
-    category: "meble-eventowe",
-    group: "krzesla",
-    pl: "Krzesło reżyserskie wysokie",
-    en: "Tall director’s chair",
-    image: "/photos/chair-director.jpg",
-    source: "/krzeslo-rezyserskie-wysokie/",
-    sizePl: "",
-    sizeEn: "",
-    descPl: "Wysokie składane krzesło reżyserskie.",
-    descEn: "Tall folding director’s chair.",
-  },
-  {
-    id: "chair-soft",
-    category: "meble-eventowe",
-    group: "krzesla",
-    pl: "Miękkie krzesła",
-    en: "Soft chairs",
-    image: "/photos/chair-soft.jpg",
-    source: "/miekkie-krzesla/",
-    sizePl: "",
-    sizeEn: "",
-    descPl: "Lekkie krzesła z miękkim siedziskiem.",
-    descEn: "Light chairs with a soft seat.",
-  },
-  {
-    id: "bench",
-    category: "catering",
-    pl: "Składana ławka cateringowa",
-    en: "Folding catering bench",
-    image: "/photos/bench.jpg",
-    source: "/skladana-lawka-cateringowa/",
-    sizePl: "",
-    sizeEn: "",
-    descPl: "Składana ławka do stołu. Mieści 3–4 osoby.",
-    descEn: "Folding bench for a table. Seats 3–4 people.",
-  },
-  {
     id: "table-180",
-    category: "meble-eventowe",
+    category: "stoly-lawki",
     group: "stoly",
     pl: "Duży stół składany 180 cm",
     en: "Large folding table, 180 cm",
@@ -152,111 +60,256 @@ export const products: Product[] = [
     descEn: "Folding table with a 180 cm top.",
   },
   {
-    id: "table-120",
-    category: "meble-eventowe",
+    id: "table-150",
+    category: "stoly-lawki",
     group: "stoly",
-    pl: "Średni stół składany 120 cm",
-    en: "Medium folding table, 120 cm",
-    image: "/photos/table-120.jpg",
-    source: "/stol-skladany120cm/",
-    sizePl: "120 cm",
-    sizeEn: "120 cm",
-    descPl: "Składany stół z blatem 120 cm.",
-    descEn: "Folding table with a 120 cm top.",
+    pl: "Stół cateringowy 150 cm",
+    en: "Catering table, 150 cm",
+    source: "/duzy-dyzur-van/",
+    sizePl: "150 cm",
+    sizeEn: "150 cm",
+    descPl: "Stół cateringowy 150 cm.",
+    descEn: "Catering table, 150 cm.",
+    notePl: "Nie ma osobnej strony. Stół 150 cm jest w pakietach Duży Dyżur Van i Średni Dyżur Van.",
+    noteEn: "No separate page. The 150 cm table is listed in the Duży Dyżur Van and Średni Dyżur Van kits.",
   },
   {
-    id: "stage-2x1",
-    category: "technika",
-    group: "scena",
-    pl: "Podest sceniczny 2×1 m",
-    en: "Stage deck, 2×1 m",
-    image: "/photos/stage.jpg",
-    source: "/wynajem-podest-sceniczny-2x1m/",
-    sizePl: "2 × 1 m",
-    sizeEn: "2 × 1 m",
-    descPl: "Modułowy podest sceniczny.",
-    descEn: "Modular stage deck.",
+    id: "bench",
+    category: "stoly-lawki",
+    group: "lawki",
+    pl: "Składana ławka cateringowa",
+    en: "Folding catering bench",
+    image: "/photos/bench.jpg",
+    source: "/skladana-lawka-cateringowa/",
+    sizePl: "180 cm",
+    sizeEn: "180 cm",
+    descPl: "Składana ławka do stołu. Mieści 3–4 osoby.",
+    descEn: "Folding bench for a table. Seats 3–4 people.",
   },
   {
-    id: "pipe-drape",
-    category: "technika",
-    group: "scena",
-    pl: "Zestaw Pipe & Drape",
-    en: "Pipe and drape set",
-    image: "/photos/pipe-drape.jpg",
-    source: "/pipe-drape/",
-    sizePl: "Belki 1,9–3 m",
-    sizeEn: "Bars 1.9–3 m",
-    descPl: "Tło, podział przestrzeni albo kontrola światła. Do 5,1 m przy trzech pionowych rurach.",
-    descEn: "A backdrop, a room divider, or light control. Up to 5.1 m with three uprights.",
-  },
-  {
-    id: "hazer-unique",
-    category: "technika",
-    group: "efekty",
-    pl: "Hazer Look Solutions Unique 2.1",
-    en: "Look Solutions Unique 2.1 hazer",
-    image: "/photos/hazer.png",
-    source: "/wynajem-hazera-look-solutions-unique-2-1/",
+    id: "chair-plastic",
+    category: "krzesla",
+    group: "twarde",
+    pl: "Plastikowe krzesło składane",
+    en: "Folding plastic chair",
+    image: "/photos/chair-plastic.jpg",
+    source: "/plastikowe-krzeslo-skladane/",
     sizePl: "",
     sizeEn: "",
-    descPl: "Hazer z DMX.",
-    descEn: "Hazer with DMX.",
+    descPl: "Składane krzesło plastikowe, do środka i na zewnątrz.",
+    descEn: "Folding plastic chair, for indoors and outdoors.",
   },
   {
-    id: "fog-ulanzi",
-    category: "technika",
-    group: "efekty",
-    pl: "Ulanzi mini dymiarka",
-    en: "Ulanzi mini fog machine",
-    image: "/photos/fog-ulanzi.jpg",
-    source: "/wynajem-ulanzi-filmog-ace-mini-fog-machine/",
+    id: "chair-soft",
+    category: "krzesla",
+    group: "miekkie",
+    pl: "Miękkie krzesła",
+    en: "Soft chairs",
+    image: "/photos/chair-soft.jpg",
+    source: "/miekkie-krzesla/",
     sizePl: "",
     sizeEn: "",
-    descPl: "Przenośna wytwornica dymu.",
-    descEn: "Portable fog machine.",
+    descPl: "Lekkie krzesła z miękkim siedziskiem.",
+    descEn: "Light chairs with a soft seat.",
   },
   {
-    id: "fog-1500",
-    category: "technika",
-    group: "efekty",
-    pl: "Dymiarka 1500 W",
-    en: "Fog machine, 1500 W",
-    image: "/photos/fog-1500.jpg",
-    source: "/dymiarka-2/",
-    sizePl: "1500 W",
-    sizeEn: "1500 W",
-    descPl: "Wytwornica dymu o mocy 1500 W.",
-    descEn: "Fog machine, 1500 W.",
-  },
-  {
-    id: "fog-mf100",
-    category: "technika",
-    group: "efekty",
-    pl: "Zamgławiacz termiczny MF-100",
-    en: "MF-100 thermal fogger",
-    image: "/photos/fog-mf.png",
-    source: "/zamglawiacz-termiczny-mf-100/",
+    id: "chair-wood",
+    category: "krzesla",
+    group: "drewniane",
+    pl: "Drewniane krzesło składane",
+    en: "Folding wooden chair",
+    image: "/photos/chair-wood.jpg",
+    source: "/drewniane-krzeslo-skladane/",
     sizePl: "",
     sizeEn: "",
-    descPl: "Zamgławiacz do większych przestrzeni.",
-    descEn: "Fogger for larger spaces.",
+    descPl: "Składane krzesło drewniane, do środka i na zewnątrz.",
+    descEn: "Folding wooden chair, for indoors and outdoors.",
   },
   {
-    id: "fral-supercool",
-    category: "klimat",
-    pl: "Klimatyzator Fral Supercool",
-    en: "Fral Supercool air conditioner",
-    image: "/photos/fral.png",
-    source: "/1457-2/",
-    sizePl: "chłodzenie 4,1 kW, grzanie 4,0 kW",
-    sizeEn: "cooling 4.1 kW, heating 4.0 kW",
-    descPl: "Wolnostojąca jednostka do chłodzenia i grzania.",
-    descEn: "Freestanding unit for cooling and heating.",
+    id: "sofa-2",
+    category: "meble-eventowe",
+    group: "kanapy",
+    pl: "Kanapa dwuosobowa",
+    en: "Two-seat sofa",
+    image: "/photos/sofa-2.png",
+    source: "/kanapa-dwuosobowa/",
+    sizePl: "",
+    sizeEn: "",
+    descPl: "Kanapa dwuosobowa.",
+    descEn: "Two-seat sofa.",
+  },
+  {
+    id: "sofa-3",
+    category: "meble-eventowe",
+    group: "kanapy",
+    pl: "Kanapa trzyosobowa",
+    en: "Three-seat sofa",
+    image: "/photos/sofa-3.png",
+    source: "/kanapa-trzyosobowa/",
+    sizePl: "",
+    sizeEn: "",
+    descPl: "Kanapa trzyosobowa.",
+    descEn: "Three-seat sofa.",
+  },
+  {
+    id: "coffee-table",
+    category: "meble-eventowe",
+    group: "stoliki",
+    pl: "Stolik kawowy",
+    en: "Coffee table",
+    image: "/photos/coffee-table.png",
+    source: "/stolik-kawowy/",
+    sizePl: "",
+    sizeEn: "",
+    descPl: "Stolik kawowy.",
+    descEn: "Coffee table.",
+  },
+  {
+    id: "work-table",
+    category: "meble-eventowe",
+    group: "stoliki",
+    pl: "Mały stolik do pracy",
+    en: "Small work table",
+    image: "/photos/work-table.jpg",
+    source: "/maly-stolik-do-pracy/",
+    sizePl: "",
+    sizeEn: "",
+    descPl: "Mały stolik do pracy.",
+    descEn: "Small work table.",
+  },
+  {
+    id: "tent-3x3",
+    category: "namioty",
+    pl: "Namiot 3×3 m",
+    en: "Tent, 3×3 m",
+    image: "/photos/tent.jpg",
+    source: "/namiot-2/",
+    sizePl: "3 × 3 m",
+    sizeEn: "3 × 3 m",
+    descPl: "Namiot 3 × 3 m z trzema ścianami bocznymi i drzwiami. Można ustawić w pomieszczeniu.",
+    descEn: "3 × 3 m tent with three side walls and a door. It can be set up indoors.",
+  },
+  {
+    id: "filter-coffee",
+    category: "catering-zaplecze",
+    group: "kawa",
+    pl: "Ekspres przelewowy",
+    en: "Filter coffee machine",
+    image: "/photos/filter-coffee.jpg",
+    source: "/ekspres-do-kawy/",
+    sizePl: "ok. 1,5 l",
+    sizeEn: "about 1.5 l",
+    descPl: "Ekspres przelewowy, około 1,5 litra.",
+    descEn: "Filter coffee machine, about 1.5 litres.",
+  },
+  {
+    id: "dolce-gusto",
+    category: "catering-zaplecze",
+    group: "kawa",
+    pl: "Ekspres do kawy Dolce Gusto",
+    en: "Dolce Gusto coffee machine",
+    image: "/photos/dolce.jpg",
+    source: "/ekspres-do-kawe-dolcegusto/",
+    sizePl: "",
+    sizeEn: "",
+    descPl: "Ekspres do kawy Dolce Gusto.",
+    descEn: "Dolce Gusto coffee machine.",
+  },
+  {
+    id: "mini-fridge",
+    category: "catering-zaplecze",
+    group: "chlodzenie",
+    pl: "Mini lodówka",
+    en: "Mini fridge",
+    image: "/photos/mini-fridge.png",
+    source: "/mini-lodowka/",
+    sizePl: "",
+    sizeEn: "",
+    descPl: "Mini lodówka.",
+    descEn: "Mini fridge.",
+  },
+  {
+    id: "yolco-gcx47",
+    category: "catering-zaplecze",
+    group: "chlodzenie",
+    pl: "Lodówka Yolco GCX47",
+    en: "Yolco GCX47 cooler",
+    image: "/photos/yolco.jpg",
+    source: "/yolco-gcx47/",
+    sizePl: "47 l",
+    sizeEn: "47 l",
+    descPl: "Lodówka kompresorowa, 47 l. Może pracować z samochodu. Opcjonalna bateria zewnętrzna.",
+    descEn: "Compressor cooler, 47 l. It can run from a car. An external battery is optional.",
+  },
+  {
+    id: "clothes-rail",
+    category: "catering-zaplecze",
+    group: "garderoba",
+    pl: "Składany wieszak",
+    en: "Folding clothes rail",
+    image: "/photos/rail.jpg",
+    source: "/skladany-wieszak-na-ubrania/",
+    sizePl: "do 15 kg",
+    sizeEn: "up to 15 kg",
+    descPl: "Składany wieszak na kółkach. Udźwig do 15 kg.",
+    descEn: "Folding rail on wheels. Holds up to 15 kg.",
+  },
+  {
+    id: "mirror",
+    category: "catering-zaplecze",
+    group: "garderoba",
+    pl: "Lustro mobilne",
+    en: "Portable mirror",
+    image: "/photos/mirror.jpg",
+    source: "/lustro-mobilne/",
+    sizePl: "",
+    sizeEn: "",
+    descPl: "Lustro mobilne.",
+    descEn: "Portable mirror.",
+  },
+  {
+    id: "bin-popup",
+    category: "organizacja",
+    group: "odpady",
+    pl: "Kosz pop-up",
+    en: "Pop-up bin",
+    image: "/photos/bin-popup.jpg",
+    source: "/kosz-na-smieci-pop-up/",
+    sizePl: "",
+    sizeEn: "",
+    descPl: "Lekki kosz pop-up. Otwiera się szybko. Worki można dokładać.",
+    descEn: "Light pop-up bin. It opens quickly. Bags can be added.",
+  },
+  {
+    id: "recycle-bins",
+    category: "organizacja",
+    group: "odpady",
+    pl: "Kubeł plenerowy (recykling)",
+    en: "Outdoor recycling bins",
+    image: "/photos/recycle.jpg",
+    source: "/kosze-na-smieci-do-recyklingu/",
+    sizePl: "",
+    sizeEn: "",
+    descPl: "Kosze na szkło, plastik i papier.",
+    descEn: "Bins for glass, plastic and paper.",
+  },
+  {
+    id: "cable-ramp",
+    category: "organizacja",
+    group: "kable",
+    pl: "Kabel najazdowy",
+    en: "Cable ramp",
+    image: "/photos/cable-ramp.jpg",
+    source: "/kabel-najazdowy/",
+    sizePl: "",
+    sizeEn: "",
+    descPl: "Kabel najazdowy.",
+    descEn: "Cable ramp.",
   },
   {
     id: "heater-convector",
-    category: "klimat",
+    category: "ogrzewanie",
+    group: "grzanie",
     pl: "Grzejnik konwektorowy",
     en: "Convector heater",
     image: "/photos/heater-conv.jpg",
@@ -268,7 +321,8 @@ export const products: Product[] = [
   },
   {
     id: "heater-2000",
-    category: "klimat",
+    category: "ogrzewanie",
+    group: "grzanie",
     pl: "Nagrzewnica elektryczna 2000 W",
     en: "Electric heater, 2000 W",
     image: "/photos/heater-2000.jpg",
@@ -279,8 +333,22 @@ export const products: Product[] = [
     descEn: "Electric fan heater.",
   },
   {
+    id: "heater-gardyer",
+    category: "ogrzewanie",
+    group: "grzanie",
+    pl: "Nagrzewnica Gardyer 2000 W",
+    en: "Gardyer heater, 2000 W",
+    image: "/photos/gardyer.jpg",
+    source: "/nagrzewnica-elektryczna-2000w-1/",
+    sizePl: "2000 W",
+    sizeEn: "2000 W",
+    descPl: "Nagrzewnica elektryczna. Rekomendowana powierzchnia do około 15–20 m².",
+    descEn: "Electric heater. Recommended area up to about 15–20 m².",
+  },
+  {
     id: "heater-3300",
-    category: "klimat",
+    category: "ogrzewanie",
+    group: "grzanie",
     pl: "Nagrzewnica elektryczna 3300 W",
     en: "Electric heater, 3300 W",
     image: "/photos/heater-3300.png",
@@ -292,7 +360,8 @@ export const products: Product[] = [
   },
   {
     id: "heater-b2",
-    category: "klimat",
+    category: "ogrzewanie",
+    group: "grzanie",
     pl: "Nagrzewnica Master B 2 PTC",
     en: "Master B 2 PTC heater",
     image: "/photos/heater-b2.jpg",
@@ -304,7 +373,8 @@ export const products: Product[] = [
   },
   {
     id: "heater-b9",
-    category: "klimat",
+    category: "ogrzewanie",
+    group: "grzanie",
     pl: "Nagrzewnica Master B 9",
     en: "Master B 9 heater",
     image: "/photos/heater-b9.jpg",
@@ -316,7 +386,8 @@ export const products: Product[] = [
   },
   {
     id: "heater-ts3a",
-    category: "klimat",
+    category: "ogrzewanie",
+    group: "grzanie",
     pl: "Promiennik Master TS 3A",
     en: "Master TS 3A heater",
     image: "/photos/heater-ts.png",
@@ -327,147 +398,108 @@ export const products: Product[] = [
     descEn: "Electric infrared heater, with no fan.",
   },
   {
-    id: "heater-xl61",
-    category: "klimat",
-    pl: "Promiennik Master XL61",
-    en: "Master XL61 heater",
-    image: "/photos/heater-xl.jpg",
-    source: "/master-xl61-mobilny-promiennik-olejowy-diesel-17-kw/",
-    sizePl: "17 kW",
-    sizeEn: "17 kW",
-    descPl: "Mobilny promiennik olejowy.",
-    descEn: "Mobile oil-fired heater.",
-  },
-  {
-    id: "fan-floor",
-    category: "klimat",
-    pl: "Wentylator podłogowy",
-    en: "Floor fan",
-    image: "/photos/fan-floor.jpg",
-    source: "/wentylator-podlogowy/",
-    sizePl: "35 W, średnica 25 cm",
-    sizeEn: "35 W, 25 cm diameter",
-    descPl: "Wentylator podłogowy o dwóch biegach.",
-    descEn: "Floor fan with two speeds.",
-  },
-  {
-    id: "fan-stand",
-    category: "klimat",
-    pl: "Wentylator na stojaku",
-    en: "Pedestal fan",
-    image: "/photos/fan-stand.jpg",
-    source: "/wentylator-stojak/",
-    sizePl: "",
-    sizeEn: "",
-    descPl: "Wentylator na stojaku.",
-    descEn: "Pedestal fan.",
-  },
-  {
-    id: "tent-3x3",
-    category: "namioty",
-    pl: "Namiot 3×3 m",
-    en: "Tent, 3×3 m",
-    image: "/photos/tent.jpg",
-    source: "/namiot-2/",
-    sizePl: "3 × 3 m",
-    sizeEn: "3 × 3 m",
-    descPl: "Namiot 3 × 3 m, także do ustawienia w pomieszczeniu.",
-    descEn: "3 × 3 m tent, including indoor use.",
-  },
-  {
-    id: "radio-xt420",
-    category: "lacznosc",
-    pl: "Radiotelefon Motorola XT420",
-    en: "Motorola XT420 radio",
-    image: "/photos/radio.jpg",
-    source: "/motorola-xt420/",
-    sizePl: "8 kanałów",
-    sizeEn: "8 channels",
-    descPl: "Lekki radiotelefon.",
-    descEn: "Light two-way radio.",
-  },
-  {
-    id: "radio-r2",
-    category: "lacznosc",
-    pl: "Radiotelefon Motorola R2",
-    en: "Motorola R2 radio",
-    image: "/photos/radio-r2.png",
-    source: "/wynajem-krotkofalowki-motorola-r2/",
-    sizePl: "",
-    sizeEn: "",
-    descPl: "Radiotelefon Motorola R2.",
-    descEn: "Motorola R2 two-way radio.",
-  },
-  {
-    id: "eartec",
-    category: "lacznosc",
-    pl: "Eartec UltraLite",
-    en: "Eartec UltraLite",
-    image: "/photos/eartec.jpg",
-    source: "/eartec/",
-    sizePl: "",
-    sizeEn: "",
-    descPl: "Zestaw słuchawkowy do rozmowy w obie strony.",
-    descEn: "Headset system for two-way talk.",
-  },
-  {
-    id: "cable-ramp",
-    category: "dodatkowe",
-    pl: "Kabel najazdowy",
-    en: "Cable ramp",
-    image: "/photos/cable-ramp.jpg",
-    source: "/kabel-najazdowy/",
-    sizePl: "",
-    sizeEn: "",
-    descPl: "Kabel najazdowy.",
-    descEn: "Cable ramp.",
-  },
-  {
-    id: "cones",
-    category: "dodatkowe",
-    pl: "Pachołek",
-    en: "Traffic cone",
-    image: "/photos/cones.jpg",
-    source: "/pacholki-drogowe/",
-    sizePl: "",
-    sizeEn: "",
-    descPl: "Pachołki drogowe do zabezpieczenia terenu nagrań.",
-    descEn: "Traffic cones for marking a shoot.",
+    id: "fral-supercool",
+    category: "ogrzewanie",
+    group: "klima",
+    pl: "Klimatyzator Fral Supercool",
+    en: "Fral Supercool air conditioner",
+    image: "/photos/fral.png",
+    source: "/1457-2/",
+    sizePl: "chłodzenie 4,1 kW, grzanie 4,0 kW",
+    sizeEn: "cooling 4.1 kW, heating 4.0 kW",
+    descPl: "Wolnostojąca jednostka do chłodzenia i grzania.",
+    descEn: "Freestanding unit for cooling and heating.",
   },
 ];
 
 export const categories: Category[] = [
   {
+    id: "stoly-lawki",
+    pl: "Stoły i ławki",
+    en: "Tables and benches",
+    // Pexels 1395967. Long banquet tables. No logo.
+    image: "/photos/categories/tables.jpg",
+    filters: [
+      { id: "stoly", pl: "Stoły", en: "Tables" },
+      { id: "lawki", pl: "Ławki", en: "Benches" },
+    ],
+  },
+  {
+    id: "krzesla",
+    pl: "Krzesła",
+    en: "Chairs",
+    // Pexels 3964344. Folding wooden chair. No logo.
+    image: "/photos/categories/chairs.jpg",
+    imagePosition: "18% 78%",
+    filters: [
+      { id: "twarde", pl: "Twarde", en: "Hard" },
+      { id: "miekkie", pl: "Miękkie", en: "Soft" },
+      { id: "drewniane", pl: "Drewniane", en: "Wooden" },
+    ],
+  },
+  {
     id: "meble-eventowe",
     pl: "Meble eventowe",
     en: "Event furniture",
-    image: "/photos/table-180.jpg",
+    // Pexels 1571468. Sofa and coffee table. No logo.
+    image: "/photos/categories/lounge.jpg",
     filters: [
-      { id: "stoly", pl: "Stoły", en: "Tables" },
-      { id: "krzesla", pl: "Krzesła", en: "Chairs" },
+      { id: "kanapy", pl: "Kanapy", en: "Sofas" },
+      { id: "stoliki", pl: "Stoliki", en: "Side tables" },
     ],
   },
-  { id: "namioty", pl: "Namioty", en: "Tents", image: "/photos/tent.jpg" },
-  { id: "catering", pl: "Catering", en: "Catering", image: "/photos/bench.jpg" },
   {
-    id: "technika",
-    pl: "Technika sceniczna",
-    en: "Stage equipment",
-    image: "/photos/stage.jpg",
+    id: "namioty",
+    pl: "Namioty i zadaszenia",
+    en: "Tents and canopies",
+    // rawpixel px944329, CC0. White event canopy. No logo.
+    image: "/photos/categories/canopy.jpg",
+  },
+  {
+    id: "catering-zaplecze",
+    pl: "Catering i zaplecze",
+    en: "Catering and service",
+    // Pexels 312418. Coffee cup. No logo.
+    image: "/photos/categories/catering.jpg",
     filters: [
-      { id: "scena", pl: "Scena", en: "Stage" },
-      { id: "efekty", pl: "Efekty", en: "Effects" },
+      { id: "kawa", pl: "Kawa", en: "Coffee" },
+      { id: "chlodzenie", pl: "Chłodzenie", en: "Cooling" },
+      { id: "garderoba", pl: "Garderoba", en: "Wardrobe" },
     ],
   },
-  { id: "dodatkowe", pl: "Wyposażenie dodatkowe", en: "Additional equipment", image: "/photos/cable-ramp.jpg" },
-  { id: "klimat", pl: "Klimat", en: "Climate", image: "/photos/fral.png" },
-  { id: "lacznosc", pl: "Łączność", en: "Radios", image: "/photos/radio.jpg" },
-  { id: "zasilanie", pl: "Zasilanie", en: "Power", image: "/photos/eu22.jpg" },
-  { id: "makeup", pl: "Makeup i garderoba", en: "Makeup and wardrobe" },
+  {
+    id: "organizacja",
+    pl: "Organizacja przestrzeni",
+    en: "Organising the space",
+    // Wikimedia Commons, Three Metal Trash Cans, Lee Ann Ratledge, CC BY 4.0. No logo.
+    image: "/photos/categories/bins.jpg",
+    filters: [
+      { id: "odpady", pl: "Odpady", en: "Waste" },
+      { id: "kable", pl: "Kable", en: "Cables" },
+    ],
+  },
+  {
+    id: "ogrzewanie",
+    pl: "Ogrzewanie i klimatyzacja",
+    en: "Heating and air conditioning",
+    // Crop of Wikimedia Commons, Oil heater 135940, لا روسا, CC BY-SA 4.0. Fins and a wheel. Control panel left out.
+    image: "/photos/categories/heater.jpg",
+    filters: [
+      { id: "grzanie", pl: "Ogrzewanie", en: "Heating" },
+      { id: "klima", pl: "Klimatyzacja", en: "Air conditioning" },
+    ],
+  },
 ];
 
-/** Homepage and Oferta order. Empty categories stay hidden. */
-const offerOrder = ["meble-eventowe", "namioty", "catering", "technika", "dodatkowe"];
+const offerOrder = [
+  "stoly-lawki",
+  "krzesla",
+  "meble-eventowe",
+  "namioty",
+  "catering-zaplecze",
+  "organizacja",
+  "ogrzewanie",
+];
 
 export function categoryById(id: string) {
   return categories.find((category) => category.id === id);
@@ -478,7 +510,21 @@ export function productById(id: string) {
 }
 
 export function productsIn(categoryId: string) {
-  return products.filter((product) => product.category === categoryId);
+  const items = products.filter((product) => product.category === categoryId);
+  const order = categoryById(categoryId)?.filters?.map((filter) => filter.id) ?? [];
+  if (order.length === 0) return items;
+  return items
+    .map((product, index) => ({ product, index }))
+    .sort((a, b) => {
+      const rank = (group: string | undefined) => {
+        if (!group) return order.length;
+        const at = order.indexOf(group);
+        return at === -1 ? order.length : at;
+      };
+      const delta = rank(a.product.group) - rank(b.product.group);
+      return delta === 0 ? a.index - b.index : delta;
+    })
+    .map((item) => item.product);
 }
 
 export function navCategories() {
@@ -494,31 +540,40 @@ function fold(value: string) {
     .replace(/\p{M}/gu, "");
 }
 
-export function searchProducts(query: string) {
-  const needle = fold(query.trim());
-  if (!needle) return products;
-  return products.filter((product) =>
-    fold([product.pl, product.en, product.sizePl, product.sizeEn, product.descPl, product.descEn].join(" ")).includes(
-      needle,
-    ),
-  );
+function listed() {
+  const ids = new Set(offerOrder);
+  return products.filter((product) => ids.has(product.category));
 }
 
-/** Live search. An empty query matches nothing. */
+function blob(product: Product) {
+  return [
+    product.pl,
+    product.en,
+    product.sizePl,
+    product.sizeEn,
+    product.descPl,
+    product.descEn,
+    product.notePl ?? "",
+    product.noteEn ?? "",
+  ].join(" ");
+}
+
+export function searchProducts(query: string) {
+  const pool = listed();
+  const needle = fold(query.trim());
+  if (!needle) return pool;
+  return pool.filter((product) => fold(blob(product)).includes(needle));
+}
+
+/** Live search. An empty query matches nothing. Only published lines. */
 export function catalogueMatches(query: string) {
   const needle = fold(query.trim());
   if (!needle) return { categories: [] as Category[], products: [] as Product[] };
   return {
-    categories: categories.filter((category) => {
+    categories: navCategories().filter((category) => {
       const filters = (category.filters ?? []).map((filter) => `${filter.pl} ${filter.en}`).join(" ");
-      return (
-        productsIn(category.id).length > 0 && fold(`${category.pl} ${category.en} ${filters}`).includes(needle)
-      );
+      return fold(`${category.pl} ${category.en} ${filters}`).includes(needle);
     }),
-    products: products.filter((product) =>
-      fold(
-        [product.pl, product.en, product.sizePl, product.sizeEn, product.descPl, product.descEn].join(" "),
-      ).includes(needle),
-    ),
+    products: listed().filter((product) => fold(blob(product)).includes(needle)),
   };
 }

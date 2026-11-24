@@ -8,12 +8,12 @@ import { getLang } from "@/lib/i18n";
 
 const popularIds = [
   "table-180",
-  "table-120",
+  "bench",
   "chair-plastic",
   "chair-wood",
-  "chair-director",
   "chair-soft",
-  "bench",
+  "sofa-2",
+  "tent-3x3",
 ];
 
 export default async function HomePage() {
@@ -45,7 +45,7 @@ export default async function HomePage() {
       <section id="kategorie" className="scroll-mt-28 mx-auto max-w-7xl px-4 py-6 md:px-5">
         <h2 className="text-3xl font-semibold tracking-tight">{copy.categoriesTitle}</h2>
         <div className="mt-4">
-          <CategoryTiles lang={lang} home />
+          <CategoryTiles lang={lang} />
         </div>
       </section>
 

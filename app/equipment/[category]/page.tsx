@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CategoryTiles } from "@/components/category-tiles";
+import { CategoryBar } from "@/components/category-tiles";
 import { ProductCard } from "@/components/product-card";
 import { categoryById, productsIn } from "@/lib/catalogue";
 import { t } from "@/lib/copy";
@@ -32,8 +32,11 @@ export default async function CategoryPage({
         </Link>
       </p>
       <h1 className="mt-2 text-3xl font-semibold tracking-tight">{name}</h1>
+      <div className="mt-4">
+        <CategoryBar lang={lang} current={category.id} />
+      </div>
       {filters.length > 0 ? (
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="mt-3 flex flex-wrap gap-2">
           <FilterChip href={`/equipment/${category.id}`} active={active === ""}>
             {copy.filterAll}
           </FilterChip>
@@ -48,13 +51,10 @@ export default async function CategoryPage({
           ))}
         </div>
       ) : null}
-      <div className="mt-5">
-        <CategoryTiles lang={lang} current={category.id} />
-      </div>
       {items.length === 0 ? (
-        <p className="mt-8 text-lg">{copy.preparingOffer}</p>
+        <p className="mt-4 text-lg">{copy.preparingOffer}</p>
       ) : (
-        <ul className="mt-5 grid grid-cols-2 gap-x-3 gap-y-6 lg:grid-cols-4">
+        <ul className="mt-4 grid grid-cols-2 gap-x-3 gap-y-6 lg:grid-cols-4">
           {items.map((product) => (
             <li key={product.id}>
               <ProductCard product={product} lang={lang} />

@@ -7,15 +7,21 @@ import {
   useMemo,
   useSyncExternalStore,
 } from "react";
+import { isDeliveryId, type DeliveryId } from "@/lib/rental";
 
 const KEY = "onsite-quote";
 const EVENT = "onsite-quote";
 
 export type Line = { id: string; qty: number };
 
-const empty: Line[] = [];
-let cacheRaw = "";
-let cacheLines: Line[] = empty;
+export type OrderDraft = {
+  lines: Line[];
+  start: string;
+  end: string;
+  delivery: DeliveryId | "";
+};
+
+const emptyOrder: OrderDraft = { lines: [], start: "", end: "", delivery: "" };
 
 export const MAX_QTY = 999;
 
@@ -24,40 +30,54 @@ export function clamp(qty: number) {
   return Math.min(MAX_QTY, Math.max(1, Math.floor(qty)));
 }
 
-function parse(raw: string): Line[] {
+function parseLines(value: unknown): Line[] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .filter(
+      (line): line is Line =>
+        !!line &&
+        typeof line === "object" &&
+        typeof (line as Line).id === "string" &&
+        typeof (line as Line).qty === "number",
+    )
+    .map((line) => ({ id: line.id, qty: clamp(line.qty) }));
+}
+
+function parse(raw: string): OrderDraft {
+  if (!raw) return emptyOrder;
   try {
     const parsed = JSON.parse(raw) as unknown;
-    if (!Array.isArray(parsed)) return [];
-    return parsed
-      .filter(
-        (line): line is Line =>
-          !!line &&
-          typeof line === "object" &&
-          typeof (line as Line).id === "string" &&
-          typeof (line as Line).qty === "number",
-      )
-      .map((line) => ({
-        id: line.id,
-        qty: clamp(line.qty),
-      }));
+    if (Array.isArray(parsed)) return { ...emptyOrder, lines: parseLines(parsed) };
+    if (!parsed || typeof parsed !== "object") return emptyOrder;
+    const record = parsed as Partial<OrderDraft>;
+    const delivery = typeof record.delivery === "string" && isDeliveryId(record.delivery) ? record.delivery : "";
+    return {
+      lines: parseLines(record.lines),
+      start: typeof record.start === "string" ? record.start : "",
+      end: typeof record.end === "string" ? record.end : "",
+      delivery,
+    };
   } catch {
-    return [];
+    return emptyOrder;
   }
 }
 
-function read(): Line[] {
-  if (typeof window === "undefined") return empty;
+let cacheRaw = "";
+let cacheOrder: OrderDraft = emptyOrder;
+
+function read(): OrderDraft {
+  if (typeof window === "undefined") return emptyOrder;
   const raw = window.localStorage.getItem(KEY) ?? "";
-  if (raw === cacheRaw) return cacheLines;
+  if (raw === cacheRaw) return cacheOrder;
   cacheRaw = raw;
-  cacheLines = parse(raw);
-  return cacheLines;
+  cacheOrder = parse(raw);
+  return cacheOrder;
 }
 
-function write(lines: Line[]) {
-  const raw = JSON.stringify(lines);
+function write(order: OrderDraft) {
+  const raw = JSON.stringify(order);
   cacheRaw = raw;
-  cacheLines = lines;
+  cacheOrder = order;
   window.localStorage.setItem(KEY, raw);
   window.dispatchEvent(new Event(EVENT));
 }
@@ -74,37 +94,62 @@ function subscribe(onStoreChange: () => void) {
 
 type QuoteApi = {
   lines: Line[];
+  start: string;
+  end: string;
+  delivery: DeliveryId | "";
   add: (id: string, qty: number) => void;
   setQty: (id: string, qty: number) => void;
   remove: (id: string) => void;
+  setPeriod: (start: string, end: string) => void;
+  setDelivery: (delivery: DeliveryId | "") => void;
   count: number;
 };
 
 const QuoteContext = createContext<QuoteApi | null>(null);
 
 export function QuoteProvider({ children }: { children: React.ReactNode }) {
-  const lines = useSyncExternalStore(subscribe, read, () => empty);
+  const order = useSyncExternalStore(subscribe, read, () => emptyOrder);
   const add = useCallback((id: string, qty: number) => {
     const next = clamp(qty);
     const current = read();
-    const found = current.find((line) => line.id === id);
-    if (found) {
-      write(current.map((line) => (line.id === id ? { ...line, qty: next } : line)));
-      return;
-    }
-    write([...current, { id, qty: next }]);
+    const found = current.lines.find((line) => line.id === id);
+    const lines = found
+      ? current.lines.map((line) => (line.id === id ? { ...line, qty: next } : line))
+      : [...current.lines, { id, qty: next }];
+    write({ ...current, lines });
   }, []);
   const setQty = useCallback((id: string, qty: number) => {
-    const next = clamp(qty);
-    write(read().map((line) => (line.id === id ? { ...line, qty: next } : line)));
+    const current = read();
+    write({
+      ...current,
+      lines: current.lines.map((line) => (line.id === id ? { ...line, qty: clamp(qty) } : line)),
+    });
   }, []);
   const remove = useCallback((id: string) => {
-    write(read().filter((line) => line.id !== id));
+    const current = read();
+    write({ ...current, lines: current.lines.filter((line) => line.id !== id) });
   }, []);
-  const count = lines.reduce((sum, line) => sum + line.qty, 0);
+  const setPeriod = useCallback((start: string, end: string) => {
+    write({ ...read(), start, end });
+  }, []);
+  const setDelivery = useCallback((delivery: DeliveryId | "") => {
+    write({ ...read(), delivery });
+  }, []);
+  const count = order.lines.reduce((sum, line) => sum + line.qty, 0);
   const value = useMemo(
-    () => ({ lines, add, setQty, remove, count }),
-    [lines, add, setQty, remove, count],
+    () => ({
+      lines: order.lines,
+      start: order.start,
+      end: order.end,
+      delivery: order.delivery,
+      add,
+      setQty,
+      remove,
+      setPeriod,
+      setDelivery,
+      count,
+    }),
+    [order, add, setQty, remove, setPeriod, setDelivery, count],
   );
   return <QuoteContext.Provider value={value}>{children}</QuoteContext.Provider>;
 }
