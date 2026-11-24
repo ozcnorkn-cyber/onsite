@@ -8,24 +8,24 @@ export function SiteFooter({ lang }: { lang: Lang }) {
   const city = lang === "en" ? company.cityEn : company.cityPl;
 
   return (
-    <footer className="mx-auto max-w-7xl px-4 pb-12 pt-16 text-sm leading-6 md:px-5">
-      <p>
-        {company.legalName}, {city}, {copy.since}
-      </p>
-      <p>
-        {copy.emailLabel}: {copy.emailPlaceholder}
-      </p>
-      <p>
-        {copy.phoneLabel}: {copy.phonePlaceholder}
-      </p>
-      <p className="mt-4 max-w-md">{copy.footer}</p>
-      <nav className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-base">
-        <Link href="/equipment">{copy.navEquipment}</Link>
-        <Link href="/about">{copy.navAbout}</Link>
-        <Link href="/contact">{copy.navContact}</Link>
-        <Link href="/privacy">{copy.navPrivacy}</Link>
-        <Link href="/terms">{copy.navTerms}</Link>
-      </nav>
+    <footer className="border-t border-ink bg-ink text-white">
+      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 md:grid-cols-2 md:px-5">
+        <div>
+          <p className="text-lg font-semibold">{copy.brand}</p>
+          <p className="mt-2">{copy.tagline}</p>
+          <p className="mt-4 text-sm">
+            {company.legalName}, {city}, {copy.since}
+          </p>
+        </div>
+        <nav className="flex flex-col gap-2 md:items-end">
+          <Link href="/equipment">{copy.navEquipment}</Link>
+          <Link href="/about">{copy.navAbout}</Link>
+          <Link href="/contact">{copy.navContact}</Link>
+          <Link href="/quote">{copy.quoteTitle}</Link>
+          <Link href="/privacy">{copy.navPrivacy}</Link>
+          <Link href="/terms">{copy.navTerms}</Link>
+        </nav>
+      </div>
     </footer>
   );
 }
