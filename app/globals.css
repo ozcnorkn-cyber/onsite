@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #0c0d0e;
+  --paper: #f2f1ed;
+  --orange: #f36b21;
+  --steel: #92979a;
+  --steel-deep: #3e4346;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-orange: var(--orange);
+  --color-steel: var(--steel);
+  --color-steel-deep: var(--steel-deep);
+  --font-sans: var(--font-body-face), "Arial", "Helvetica Neue", sans-serif;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  overflow-x: clip;
+}
+
+.piece-name {
+  display: block;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  font-size: 1.35rem;
+}
+
+@layer components {
+.display {
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 0.92;
+}
+
+.kicker {
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--steel-deep);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--orange);
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  padding: 0.9rem 1.15rem;
+  border: 1px solid var(--orange);
+}
+
+.btn:hover {
+  background: #d85a16;
+}
+
+.clip-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.clip-frame img {
+  transform: scale(1.14);
+}
+
+.clip-card {
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.btn-line {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  padding: 0.55rem 0.7rem;
+}
+
+.btn-line:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+}
+
+.field input,
+.field select,
+.field textarea,
+input[type="search"] {
+  border-radius: 0;
+}
+
+.field input,
+.field select,
+.field textarea {
+  border: 1px solid var(--ink);
+  background: #fff;
+  color: var(--ink);
+  padding: 0.7rem 0.75rem;
+  font: inherit;
+}
+
+.plate {
+  mix-blend-mode: multiply;
+}
+
+.wordmark {
+  height: 1.85rem;
+  width: auto;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .wordmark {
+    height: 2.15rem;
+  }
+}
