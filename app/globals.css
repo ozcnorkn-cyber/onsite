@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #0c0d0e;
+  --paper: #f2f1ed;
+  --orange: #f36b21;
+  --steel: #92979a;
+  --steel-deep: #3e4346;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-orange: var(--orange);
+  --color-steel: var(--steel);
+  --color-steel-deep: var(--steel-deep);
+  --font-sans: var(--font-body-face), "Arial", "Helvetica Neue", sans-serif;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+
+@layer components {
+.display {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 0.95;
+}
+
+.kicker {
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--steel-deep);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--orange);
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  padding: 0.9rem 1.15rem;
+  border: 1px solid var(--orange);
+}
+
+.btn:hover {
+  background: #d85a16;
+}
+
+.btn-line {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  padding: 0.55rem 0.7rem;
+}
+
+.btn-line:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+}
+
+.field input,
+.field select,
+.field textarea {
+  border: 1px solid var(--ink);
+  background: #fff;
+  color: var(--ink);
+  padding: 0.7rem 0.75rem;
+  font: inherit;
+}
+
+.wordmark {
+  height: 4.4rem;
+  width: auto;
+  display: block;
+}
+
+.wordmark-footer {
+  height: 6.5rem;
+}
+
+@media (min-width: 768px) {
+  .wordmark {
+    height: 5.5rem;
+  }
+}
