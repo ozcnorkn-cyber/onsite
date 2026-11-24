@@ -83,9 +83,11 @@ export function QuoteScreen({ lang }: { lang: Lang }) {
                     <span className="text-steel-deep">{copy.rentalCharge}</span>
                     <span className="mt-1 block font-semibold">{copy.pricePreparing}</span>
                   </p>
-                  <div className="relative mt-2 h-24 w-44">
-                    <Image src={product.image} alt="" fill sizes="176px" className="plate object-contain object-left" />
-                  </div>
+                  {product.image ? (
+                    <div className="relative mt-2 h-24 w-44">
+                      <Image src={product.image} alt="" fill sizes="176px" className="plate object-contain object-left" />
+                    </div>
+                  ) : null}
                 </li>
               );
             })}

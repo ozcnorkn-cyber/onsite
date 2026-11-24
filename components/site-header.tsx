@@ -6,7 +6,7 @@ import { Suspense, useState } from "react";
 import type { Lang } from "@/lib/i18n";
 import { t } from "@/lib/copy";
 import { CatalogSearch } from "./catalog-search";
-import { CategoryTiles } from "./category-tiles";
+import { CategoryBar } from "./category-tiles";
 import { LanguageSwitch } from "./language-switch";
 import { useQuote } from "./quote-store";
 import { Wordmark } from "./wordmark";
@@ -63,8 +63,8 @@ export function SiteHeader({ lang }: { lang: Lang }) {
             {copy.navEquipment}
           </Link>
           {offerOpen ? (
-            <div className="absolute left-0 top-full z-40 w-[52rem] max-w-[calc(100vw-2.5rem)] border border-ink bg-paper p-3">
-              <CategoryTiles lang={lang} dense />
+            <div className="absolute left-0 top-full z-40 w-[34rem] max-w-[calc(100vw-2.5rem)] border border-ink bg-paper p-3">
+              <CategoryBar lang={lang} />
             </div>
           ) : null}
         </div>
@@ -90,7 +90,7 @@ export function SiteHeader({ lang }: { lang: Lang }) {
             <LanguageSwitch lang={lang} />
           </div>
           <div className="py-2" onClick={() => setOpenedAt(null)}>
-            <CategoryTiles lang={lang} compact />
+            <CategoryBar lang={lang} />
           </div>
           <Link href="/#dostawa" className="block py-2 text-base font-semibold" onClick={() => setOpenedAt(null)}>
             {copy.navDelivery}

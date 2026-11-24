@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CategoryTiles } from "@/components/category-tiles";
+import { CategoryBar } from "@/components/category-tiles";
 import { ProductCard } from "@/components/product-card";
 import { categoryById, productsIn } from "@/lib/catalogue";
 import { t } from "@/lib/copy";
@@ -32,8 +32,11 @@ export default async function CategoryPage({
         </Link>
       </p>
       <h1 className="mt-2 text-3xl font-semibold tracking-tight">{name}</h1>
+      <div className="mt-4">
+        <CategoryBar lang={lang} current={category.id} />
+      </div>
       {filters.length > 0 ? (
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="mt-3 flex flex-wrap gap-2">
           <FilterChip href={`/equipment/${category.id}`} active={active === ""}>
             {copy.filterAll}
           </FilterChip>
@@ -48,10 +51,6 @@ export default async function CategoryPage({
           ))}
         </div>
       ) : null}
-      <div className="mt-5">
-        <CategoryTiles lang={lang} current={category.id} compact />
-      </div>
-      <h2 className="mt-8 border-t border-ink pt-4 text-2xl font-semibold tracking-tight">{name}</h2>
       {items.length === 0 ? (
         <p className="mt-4 text-lg">{copy.preparingOffer}</p>
       ) : (

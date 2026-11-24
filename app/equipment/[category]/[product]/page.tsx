@@ -34,23 +34,28 @@ export default async function ProductPage({
   const group = lang === "en" ? category.en : category.pl;
   const size = lang === "en" ? product.sizeEn : product.sizePl;
   const description = lang === "en" ? product.descEn : product.descPl;
+  const note = lang === "en" ? product.noteEn : product.notePl;
   const copy = t(lang);
   const price = (lang === "en" ? product.priceEn : product.pricePl) || copy.pricePreparing;
   const groupName = category.filters?.find((filter) => filter.id === product.group);
   const groupLabel = groupName ? (lang === "en" ? groupName.en : groupName.pl) : "";
 
   return (
-    <article className="mx-auto grid max-w-7xl items-start gap-8 px-4 py-6 md:grid-cols-2 md:px-5">
-      <div className="clip-frame aspect-[4/3] bg-white">
-        <Image
-          src={product.image}
-          alt={name}
-          fill
-          priority
-          sizes="(min-width: 768px) 50vw, 100vw"
-          className="object-contain"
-        />
-      </div>
+    <article
+      className={`mx-auto grid max-w-7xl items-start gap-8 px-4 py-6 md:px-5 ${product.image ? "md:grid-cols-2" : ""}`}
+    >
+      {product.image ? (
+        <div className="clip-frame aspect-[4/3] bg-white">
+          <Image
+            src={product.image}
+            alt={name}
+            fill
+            priority
+            sizes="(min-width: 768px) 50vw, 100vw"
+            className="object-contain"
+          />
+        </div>
+      ) : null}
       <div className="md:pt-4">
         <p className="text-sm">
           <Link href={`/equipment/${category.id}`} className="font-semibold underline">
@@ -59,6 +64,7 @@ export default async function ProductPage({
         </p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">{name}</h1>
         {groupLabel ? <p className="mt-3 text-steel-deep">{groupLabel}</p> : null}
+        <p className="mt-3">{copy.qtyNotOnFile}</p>
         <dl className="max-w-md">
           {size ? (
             <div className="mt-3">
@@ -77,6 +83,7 @@ export default async function ProductPage({
           <div className="mt-3">
             <dt className="text-sm text-steel-deep">{copy.details}</dt>
             <dd className="text-lg">{description}</dd>
+            {note ? <dd className="mt-2 text-lg">{note}</dd> : null}
           </div>
         </dl>
         <RentalPanel id={product.id} lang={lang} />

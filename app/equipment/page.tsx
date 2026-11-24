@@ -1,4 +1,4 @@
-import { CategoryTiles } from "@/components/category-tiles";
+import { CategoryBar } from "@/components/category-tiles";
 import { ProductCard } from "@/components/product-card";
 import { categoryById, navCategories, productsIn, searchProducts } from "@/lib/catalogue";
 import { t } from "@/lib/copy";
@@ -23,7 +23,7 @@ export default async function EquipmentPage({
       {query ? null : <p className="mt-2 max-w-2xl text-sm text-steel-deep">{copy.equipmentIntro}</p>}
       {query ? null : (
         <div id="katalog" className="mt-6">
-          <CategoryTiles lang={lang} compact />
+          <CategoryBar lang={lang} />
         </div>
       )}
       {query && found.length === 0 ? <p className="mt-8 text-lg">{copy.noResults}</p> : null}
