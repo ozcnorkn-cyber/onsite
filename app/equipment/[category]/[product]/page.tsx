@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { QuoteControls } from "@/components/quote-controls";
+import { RentalPanel } from "@/components/rental-panel";
 import { categoryById, productById } from "@/lib/catalogue";
 import { t } from "@/lib/copy";
 import { getLang } from "@/lib/i18n";
@@ -36,6 +36,8 @@ export default async function ProductPage({
   const description = lang === "en" ? product.descEn : product.descPl;
   const copy = t(lang);
   const price = (lang === "en" ? product.priceEn : product.pricePl) || copy.pricePreparing;
+  const groupName = category.filters?.find((filter) => filter.id === product.group);
+  const groupLabel = groupName ? (lang === "en" ? groupName.en : groupName.pl) : "";
 
   return (
     <article className="mx-auto grid max-w-7xl items-start gap-8 px-4 py-6 md:grid-cols-2 md:px-5">
@@ -56,12 +58,28 @@ export default async function ProductPage({
           </Link>
         </p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">{name}</h1>
-        {size ? <p className="mt-4 text-steel-deep">{size}</p> : null}
-        <p className="mt-3 text-lg font-medium">{price}</p>
-        <p className="mt-4 max-w-md text-lg">{description}</p>
-        <div className="mt-6">
-          <QuoteControls id={product.id} lang={lang} />
-        </div>
+        {groupLabel ? <p className="mt-3 text-steel-deep">{groupLabel}</p> : null}
+        <dl className="max-w-md">
+          {size ? (
+            <div className="mt-3">
+              <dt className="text-sm text-steel-deep">{copy.sizeLabel}</dt>
+              <dd>{size}</dd>
+            </div>
+          ) : null}
+          <div className="mt-3">
+            <dt className="text-sm text-steel-deep">{copy.priceLabel}</dt>
+            <dd className="text-lg font-medium">{price}</dd>
+          </div>
+          <div className="mt-3">
+            <dt className="text-sm text-steel-deep">{copy.depositLabel}</dt>
+            <dd className="text-lg font-medium">{copy.depositPreparing}</dd>
+          </div>
+          <div className="mt-3">
+            <dt className="text-sm text-steel-deep">{copy.details}</dt>
+            <dd className="text-lg">{description}</dd>
+          </div>
+        </dl>
+        <RentalPanel id={product.id} lang={lang} />
       </div>
     </article>
   );

@@ -43,12 +43,15 @@ export function CategoryTiles({
   ids,
   current,
   dense = false,
+  compact = false,
   home = false,
 }: {
   lang: Lang;
   ids?: string[];
   current?: string;
   dense?: boolean;
+  /** Inner pages: the menu's small tile, in a grid that fits a phone. */
+  compact?: boolean;
   /** Homepage: the first tile is twice as wide and centred, the rest share one row. */
   home?: boolean;
 }) {
@@ -76,11 +79,18 @@ export function CategoryTiles({
     );
   }
 
+  const small = dense || compact;
+  const grid = dense
+    ? "grid grid-cols-5 gap-2"
+    : compact
+      ? "grid grid-cols-3 gap-x-3 gap-y-4 md:grid-cols-5"
+      : "grid grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-4";
+
   return (
-    <ul className={dense ? "grid grid-cols-5 gap-2" : "grid grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-4"}>
+    <ul className={grid}>
       {tiles.map((category) => (
         <li key={category.id}>
-          <Tile category={category} lang={lang} current={current} dense={dense} />
+          <Tile category={category} lang={lang} current={current} dense={small} />
         </li>
       ))}
     </ul>

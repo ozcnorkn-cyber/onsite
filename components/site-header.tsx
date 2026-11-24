@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import type { Lang } from "@/lib/i18n";
 import { t } from "@/lib/copy";
 import { CatalogSearch } from "./catalog-search";
@@ -25,16 +25,19 @@ export function SiteHeader({ lang }: { lang: Lang }) {
         <Link href="/" aria-label={copy.brand} className="shrink-0">
           <Wordmark />
         </Link>
-        <div className="min-w-0 flex-1">
-          <CatalogSearch lang={lang} id="catalog-search" />
+        <div className="min-w-36 flex-1">
+          <Suspense fallback={<div className="h-10 border border-ink bg-white" aria-hidden />}>
+            <CatalogSearch lang={lang} id="catalog-search" />
+          </Suspense>
         </div>
         <Link
           href="/quote"
           className="btn h-10 shrink-0 px-3 py-0"
           aria-current={pathname === "/quote" ? "page" : undefined}
+          aria-label={copy.quoteTitle}
         >
-          {copy.quoteTitle}
-          <span className="ml-2 inline-flex min-w-6 justify-center border border-white px-1">{count}</span>
+          <span className="hidden sm:inline">{copy.quoteTitle}</span>
+          <span className="inline-flex min-w-6 justify-center border border-white px-1 sm:ml-2">{count}</span>
         </Link>
         <button
           type="button"
@@ -65,9 +68,6 @@ export function SiteHeader({ lang }: { lang: Lang }) {
             </div>
           ) : null}
         </div>
-        <Link href="/equipment" className="text-sm font-semibold">
-          {copy.navHire}
-        </Link>
         <Link href="/#dostawa" className="text-sm font-semibold">
           {copy.navDelivery}
         </Link>
@@ -90,11 +90,8 @@ export function SiteHeader({ lang }: { lang: Lang }) {
             <LanguageSwitch lang={lang} />
           </div>
           <div className="py-2" onClick={() => setOpenedAt(null)}>
-            <CategoryTiles lang={lang} />
+            <CategoryTiles lang={lang} compact />
           </div>
-          <Link href="/equipment" className="block py-2 text-base font-semibold" onClick={() => setOpenedAt(null)}>
-            {copy.navHire}
-          </Link>
           <Link href="/#dostawa" className="block py-2 text-base font-semibold" onClick={() => setOpenedAt(null)}>
             {copy.navDelivery}
           </Link>

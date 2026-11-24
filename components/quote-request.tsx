@@ -4,16 +4,18 @@ import { useState } from "react";
 import type { Lang } from "@/lib/i18n";
 import { t } from "@/lib/copy";
 import { productById } from "@/lib/catalogue";
+import { checkPeriod } from "@/lib/rental";
 import { useQuote } from "./quote-store";
 
 const STORE = "onsite-enquiries";
 
 export function QuoteRequest({ lang }: { lang: Lang }) {
   const copy = t(lang);
-  const { lines } = useQuote();
+  const { lines, start, end, delivery } = useQuote();
   const [error, setError] = useState("");
   const [saved, setSaved] = useState("");
   const [copied, setCopied] = useState(false);
+  const chosen = copy.options.find((option) => option.id === delivery);
 
   function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -24,23 +26,27 @@ export function QuoteRequest({ lang }: { lang: Lang }) {
     const customerType = String(data.get("customerType") ?? "").trim();
     const company = String(data.get("company") ?? "").trim();
     const phone = String(data.get("phone") ?? "").trim();
-    const start = String(data.get("start") ?? "").trim();
-    const end = String(data.get("end") ?? "").trim();
     const location = String(data.get("location") ?? "").trim();
     const message = String(data.get("message") ?? "").trim();
+    const period = checkPeriod(start, end);
 
-    if (!name || !email || !customerType || !start || !end || !location) {
+    if (!name || !email || !customerType || !location) {
       setError(copy.required);
       setSaved("");
       return;
     }
-    if (lines.length === 0 && !message) {
-      setError(copy.messageHint);
+    if (period.state === "missing") {
+      setError(copy.availabilityMissing);
       setSaved("");
       return;
     }
-    if (end < start) {
+    if (period.state === "invalid") {
       setError(copy.dateOrder);
+      setSaved("");
+      return;
+    }
+    if (!chosen) {
+      setError(copy.deliveryChoose);
       setSaved("");
       return;
     }
@@ -48,13 +54,7 @@ export function QuoteRequest({ lang }: { lang: Lang }) {
     const items = lines.flatMap((line) => {
       const product = productById(line.id);
       if (!product) return [];
-      return [
-        {
-          id: product.id,
-          name: lang === "en" ? product.en : product.pl,
-          qty: line.qty,
-        },
-      ];
+      return [{ id: product.id, name: lang === "en" ? product.en : product.pl, qty: line.qty }];
     });
     const record = {
       at: new Date().toISOString(),
@@ -65,10 +65,15 @@ export function QuoteRequest({ lang }: { lang: Lang }) {
       phone,
       start,
       end,
+      days: period.days,
+      delivery: chosen.id,
       location,
       message,
       items,
+      rentalCharge: null,
+      deposit: null,
       sent: false,
+      reserves: false,
     };
     const previous = window.localStorage.getItem(STORE);
     const list = previous ? (JSON.parse(previous) as unknown[]) : [];
@@ -81,9 +86,12 @@ export function QuoteRequest({ lang }: { lang: Lang }) {
       company,
       phone,
       `${start} – ${end}`,
+      chosen.title,
       location,
       message,
       ...items.map((item) => `${item.qty} × ${item.name}`),
+      `${copy.rentalCharge}: ${copy.pricePreparing}`,
+      `${copy.depositLabel}: ${copy.depositPreparing}`,
     ]
       .filter(Boolean)
       .join("\n");
@@ -100,8 +108,8 @@ export function QuoteRequest({ lang }: { lang: Lang }) {
 
   return (
     <div>
-      <h3 className="display text-2xl">{copy.requestTitle}</h3>
-      <form className="mt-6 grid gap-4 md:grid-cols-2" onSubmit={onSubmit}>
+      <h2 className="text-2xl font-medium tracking-tight">{copy.requestTitle}</h2>
+      <form className="mt-6 grid gap-4 sm:grid-cols-2" onSubmit={onSubmit}>
         <label className="field">
           {copy.fullName}
           <input name="name" autoComplete="name" required />
@@ -135,25 +143,16 @@ export function QuoteRequest({ lang }: { lang: Lang }) {
           {copy.deliveryLocation}
           <input name="location" required />
         </label>
-        <label className="field">
-          {copy.rentalStart}
-          <input name="start" type="date" required />
-        </label>
-        <label className="field">
-          {copy.rentalEnd}
-          <input name="end" type="date" required />
-        </label>
-        <label className="field md:col-span-2">
+        <label className="field sm:col-span-2">
           {copy.message}
-          <span className="text-steel-deep"> {copy.messageHint}</span>
           <textarea name="message" rows={4} />
         </label>
         {error ? (
-          <p className="text-sm md:col-span-2" role="alert">
+          <p className="text-sm sm:col-span-2" role="alert">
             {error}
           </p>
         ) : null}
-        <div className="md:col-span-2">
+        <div className="sm:col-span-2">
           <button type="submit" className="btn">
             {copy.submit}
           </button>

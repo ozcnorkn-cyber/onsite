@@ -1,26 +1,50 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { catalogueMatches } from "@/lib/catalogue";
 import { t } from "@/lib/copy";
 import type { Lang } from "@/lib/i18n";
 
 export function CatalogSearch({ lang, id }: { lang: Lang; id: string }) {
   const copy = t(lang);
-  const pathname = usePathname();
-  const [draft, setDraft] = useState({ path: pathname, query: "" });
-  const query = draft.path === pathname ? draft.query : "";
-  const trimmed = query.trim();
+  const router = useRouter();
+  const params = useSearchParams();
+  const qParam = params.get("q") ?? "";
+  const [override, setOverride] = useState<string | null>(null);
+  if (override !== null && override.trim() === qParam) setOverride(null);
+  const draft = override ?? qParam;
+  const timer = useRef<number | null>(null);
+  const trimmed = draft.trim();
   const { categories, products } = catalogueMatches(trimmed);
   const open = trimmed.length > 0;
+
+  useEffect(() => {
+    return () => {
+      if (timer.current !== null) window.clearTimeout(timer.current);
+    };
+  }, []);
+
+  function commit(value: string) {
+    const next = value.trim();
+    const href = next ? `/equipment?q=${encodeURIComponent(next)}` : "/equipment";
+    router.replace(href, { scroll: false });
+  }
+
+  function onChange(value: string) {
+    setOverride(value);
+    if (timer.current !== null) window.clearTimeout(timer.current);
+    timer.current = window.setTimeout(() => commit(value), 250);
+  }
 
   return (
     <div className="relative min-w-0 flex-1">
       <form
         onSubmit={(event) => {
           event.preventDefault();
+          if (timer.current !== null) window.clearTimeout(timer.current);
+          commit(draft);
         }}
       >
         <label className="sr-only" htmlFor={id}>
@@ -29,11 +53,11 @@ export function CatalogSearch({ lang, id }: { lang: Lang; id: string }) {
         <input
           id={id}
           type="search"
-          value={query}
+          value={draft}
           autoComplete="off"
           placeholder={copy.searchPlaceholder}
-          onChange={(event) => setDraft({ path: pathname, query: event.target.value })}
-          className="w-full border border-ink bg-white px-3 py-2 text-sm text-ink"
+          onChange={(event) => onChange(event.target.value)}
+          className="w-full min-w-0 border border-ink bg-white px-3 py-2 text-sm text-ink"
         />
       </form>
       {open ? (

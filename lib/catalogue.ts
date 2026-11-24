@@ -466,7 +466,10 @@ export const categories: Category[] = [
   { id: "makeup", pl: "Makeup i garderoba", en: "Makeup and wardrobe" },
 ];
 
-/** Homepage and Oferta order. Empty categories stay hidden. */
+/**
+ * Categories already on the public browse path.
+ * Power, climate, radios and other lines stay off this list until an inventory audit marks them ready.
+ */
 const offerOrder = ["meble-eventowe", "namioty", "catering", "technika", "dodatkowe"];
 
 export function categoryById(id: string) {
@@ -478,7 +481,21 @@ export function productById(id: string) {
 }
 
 export function productsIn(categoryId: string) {
-  return products.filter((product) => product.category === categoryId);
+  const items = products.filter((product) => product.category === categoryId);
+  const order = categoryById(categoryId)?.filters?.map((filter) => filter.id) ?? [];
+  if (order.length === 0) return items;
+  return items
+    .map((product, index) => ({ product, index }))
+    .sort((a, b) => {
+      const rank = (group: string | undefined) => {
+        if (!group) return order.length;
+        const at = order.indexOf(group);
+        return at === -1 ? order.length : at;
+      };
+      const delta = rank(a.product.group) - rank(b.product.group);
+      return delta === 0 ? a.index - b.index : delta;
+    })
+    .map((item) => item.product);
 }
 
 export function navCategories() {
