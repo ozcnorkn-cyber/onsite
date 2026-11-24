@@ -3,7 +3,15 @@ import Link from "next/link";
 import { categories } from "@/lib/catalogue";
 import type { Lang } from "@/lib/i18n";
 
-export function CategoryTiles({ lang, ids }: { lang: Lang; ids?: string[] }) {
+export function CategoryTiles({
+  lang,
+  ids,
+  soft = false,
+}: {
+  lang: Lang;
+  ids?: string[];
+  soft?: boolean;
+}) {
   const wanted = ids ?? categories.map((category) => category.id);
   const tiles = wanted
     .map((id) => categories.find((category) => category.id === id))
@@ -16,7 +24,7 @@ export function CategoryTiles({ lang, ids }: { lang: Lang; ids?: string[] }) {
         return (
           <li key={category.id}>
             <Link href={`/equipment/${category.id}`} className="block">
-              <div className="relative aspect-[4/3] bg-white">
+              <div className={soft ? "relative aspect-[4/3] overflow-hidden rounded-2xl bg-white" : "relative aspect-[4/3] bg-white"}>
                 <Image
                   src={category.image}
                   alt=""

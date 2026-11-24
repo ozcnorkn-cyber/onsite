@@ -8,10 +8,12 @@ export function ProductCard({
   product,
   lang,
   large = false,
+  soft = false,
 }: {
   product: Product;
   lang: Lang;
   large?: boolean;
+  soft?: boolean;
 }) {
   const name = lang === "en" ? product.en : product.pl;
   const size = lang === "en" ? product.sizeEn : product.sizePl;
@@ -20,9 +22,15 @@ export function ProductCard({
   const group = category ? (lang === "en" ? category.en : category.pl) : "";
 
   return (
-    <article className="flex h-full flex-col">
+    <article
+      className={
+        soft
+          ? "flex h-full flex-col rounded-2xl border border-ink/10 bg-white p-3 [&_.btn]:rounded-lg"
+          : "flex h-full flex-col"
+      }
+    >
       <Link href={`/equipment/${product.category}/${product.id}`} className="block">
-        <div className="relative aspect-[4/3] bg-white">
+        <div className={soft ? "relative aspect-[4/3] overflow-hidden rounded-xl bg-paper" : "relative aspect-[4/3] bg-white"}>
           <Image
             src={product.image}
             alt={name}

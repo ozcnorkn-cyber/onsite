@@ -28,7 +28,7 @@ export default async function CategoryPage({
       <ul className="mt-5 grid grid-cols-2 gap-x-3 gap-y-6 lg:grid-cols-4">
         {productsIn(category.id).map((product) => (
           <li key={product.id}>
-            <ProductCard product={product} lang={lang} />
+            <ProductCard product={product} lang={lang} soft />
           </li>
         ))}
       </ul>

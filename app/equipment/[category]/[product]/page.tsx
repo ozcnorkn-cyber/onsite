@@ -37,7 +37,7 @@ export default async function ProductPage({
 
   return (
     <article className="mx-auto grid max-w-7xl items-start gap-8 px-4 py-6 md:grid-cols-2 md:px-5">
-      <div className="relative aspect-[4/3] bg-white">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-white">
         <Image
           src={product.image}
           alt={name}

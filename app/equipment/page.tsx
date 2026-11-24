@@ -23,7 +23,7 @@ export default async function EquipmentPage({
       {query ? null : <p className="mt-2 max-w-2xl text-sm text-steel-deep">{copy.equipmentIntro}</p>}
       {query ? null : (
         <div id="katalog" className="mt-6">
-          <CategoryTiles lang={lang} />
+          <CategoryTiles lang={lang} soft />
         </div>
       )}
       {query && found.length === 0 ? <p className="mt-8 text-lg">{copy.noResults}</p> : null}
@@ -31,7 +31,7 @@ export default async function EquipmentPage({
         <ul className={`${query ? "mt-6" : "mt-8"} grid grid-cols-2 gap-x-3 gap-y-6 lg:grid-cols-4`}>
           {found.map((product) => (
             <li key={product.id}>
-              <ProductCard product={product} lang={lang} />
+              <ProductCard product={product} lang={lang} soft />
             </li>
           ))}
         </ul>
