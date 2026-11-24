@@ -8,16 +8,15 @@ export default async function ContactPage() {
 
   return (
     <article className="mx-auto max-w-3xl px-5 py-16">
-      <p className="kicker">{copy.brand}</p>
+      <p className="kicker">{copy.tagline}</p>
       <h1 className="display mt-4 text-4xl md:text-6xl">{copy.contactTitle}</h1>
-      <p className="mt-6 text-lg">{copy.contactPeople}</p>
-      <p className="mt-4">
+      <p className="mt-6 max-w-xl text-lg leading-8">{copy.contactBody}</p>
+      <p className="mt-6">
         {copy.emailLabel}: {copy.emailPlaceholder}
       </p>
       <p>
         {copy.phoneLabel}: {copy.phonePlaceholder}
       </p>
-      <p className="mt-4">{copy.serviceArea}</p>
       <Link href="/quote" className="btn mt-8">
         {copy.contactCta}
       </Link>

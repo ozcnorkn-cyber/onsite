@@ -381,13 +381,13 @@ export const products: Product[] = [
 ];
 
 export const categories: Category[] = [
-  { id: "zasilanie", pl: "Zasilanie", en: "Power", image: "/photos/eu22.jpg" },
   { id: "meble", pl: "Meble", en: "Furniture", image: "/photos/table-180.jpg" },
   { id: "scena", pl: "Scena", en: "Stage", image: "/photos/stage.jpg" },
   { id: "efekty", pl: "Efekty", en: "Effects", image: "/photos/hazer.png" },
   { id: "klimat", pl: "Klimat", en: "Climate", image: "/photos/fral.png" },
   { id: "namioty", pl: "Namioty", en: "Tents", image: "/photos/tent.jpg" },
   { id: "lacznosc", pl: "Łączność", en: "Radios", image: "/photos/radio.jpg" },
+  { id: "zasilanie", pl: "Zasilanie", en: "Power", image: "/photos/eu22.jpg" },
 ];
 
 export function categoryById(id: string) {

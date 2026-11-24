@@ -17,7 +17,7 @@ const banned = [
   /malik montana/i,
   /artur szpilka/i,
   /DYZ-/,
-  /zł/,
+  /(?<![\p{L}])zł(?![\p{L}])/u,
   /\bPLN\b/,
 ];
 

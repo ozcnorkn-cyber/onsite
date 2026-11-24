@@ -1,11 +1,11 @@
 import type { Lang } from "./i18n";
 
 const pl = {
-  metaTitle: "ON SITE — Wynajem sprzętu na wydarzenia",
+  metaTitle: "ON SITE — Stoły i krzesła na wydarzenia",
   metaDescription:
-    "Katalog wynajmu sprzętu na produkcje, wydarzenia i prywatne okazje. Bez cen w katalogu.",
+    "Wynajem podstawowego wyposażenia dla agencji, firm i klientów prywatnych. Zaczynamy od stołów i krzeseł.",
   brand: "ON SITE",
-  navEquipment: "Sprzęt",
+  navEquipment: "Oferta",
   navAbout: "O nas",
   navContact: "Kontakt",
   navPrivacy: "Prywatność",
@@ -13,13 +13,41 @@ const pl = {
   langPl: "PL",
   langEn: "EN",
   menu: "Menu",
-  heroTitle: "Sprzęt na produkcje, wydarzenia i prywatne okazje.",
-  heroBody: "Wybierz kategorię i dodaj pozycje do wyceny.",
-  heroCta: "Zobacz sprzęt",
-  categoriesTitle: "Kategorie",
-  equipmentTitle: "Sprzęt",
+  tagline: "Twój plan. Nasze wsparcie.",
+  heroTitle: "Stoły i krzesła na wydarzenia.",
+  heroBody: "Wynajem podstawowego wyposażenia dla agencji, firm i klientów prywatnych.",
+  heroCta: "Zobacz ofertę",
+  heroCtaSecondary: "Skontaktuj się z nami",
+  optionsTitle: "Trzy formy wynajmu",
+  options: [
+    { title: "Wynajem", body: "Odbiór i zwrot we własnym zakresie." },
+    { title: "Wynajem z dostawą", body: "Dowóz i odbiór." },
+    {
+      title: "Wynajem z dostawą i montażem",
+      body: "Dowóz, rozładunek i ustawienie na miejscu.",
+    },
+  ],
+  offerTitle: "Oferta",
+  offerBody: "Meble eventowe. Stoły i krzesła. Kolejne kategorie dojdą do katalogu.",
+  howTitle: "Jak to działa",
+  how: [
+    "Wybierasz sprzęt.",
+    "Wskazujesz odbiór albo dostawę.",
+    "Montaż na miejscu jest opcją.",
+    "Po wydarzeniu zwracasz sprzęt albo odbieramy go my.",
+  ],
+  whoTitle: "Dla kogo",
+  who: [
+    "Firmy",
+    "Agencje eventowe",
+    "Organizatorzy",
+    "Klienci prywatni",
+    "Produkcja filmowa",
+  ],
+  categoriesTitle: "Katalog",
+  equipmentTitle: "Oferta",
   equipmentIntro:
-    "Wybierz kategorię, a na stronie produktu podaj ilość. Moja wycena jest w nagłówku. Bez cen.",
+    "Meble eventowe. Stoły i krzesła. Na stronie produktu podajesz ilość. Moja wycena jest w menu. Bez cen.",
   details: "Szczegóły",
   sizeLabel: "Wymiary",
   backCategory: "Wróć do kategorii",
@@ -53,17 +81,17 @@ const pl = {
   copyRequest: "Kopiuj treść",
   copied: "Skopiowano",
   aboutTitle: "O nas",
+  aboutLead: "ON SITE wynajmuje wyposażenie na wydarzenia. Zaczynamy od stołów i krzeseł.",
   aboutBody:
-    "ON SITE to marka wynajmu DYŻUREK sp. z o.o. w Warszawie, od sierpnia 2024. Zapytania przyjmują Orkun i Zosia.",
+    "Stoi za nami doświadczenie z planu filmowego i logistyki na lokacji. Stąd nawyk terminów, transportu i porządku. Pracujemy z agencjami, firmami i klientami prywatnymi, nie tylko z produkcjami.",
   contactTitle: "Kontakt",
-  contactPeople: "Zapytania przyjmują Orkun i Zosia.",
+  contactBody:
+    "Napisz, kiedy i gdzie jest wydarzenie oraz czego potrzebujesz. Odezwiemy się z dostępnością.",
   emailLabel: "E-mail",
   emailPlaceholder: "[adres e-mail]",
   phoneLabel: "Telefon",
   phonePlaceholder: "[telefon]",
-  serviceArea:
-    "Warszawa i okolice. Inne miejsca w Polsce w zależności od projektu.",
-  contactCta: "Przejdź do wyceny",
+  contactCta: "Moja wycena",
   privacyTitle: "Prywatność",
   privacyBody:
     "Polityka prywatności nie jest jeszcze opublikowana. Operatorem marki ON SITE jest DYŻUREK sp. z o.o.",
@@ -72,8 +100,7 @@ const pl = {
     "Warunki wynajmu nie są jeszcze opublikowane. W katalogu nie ma cen. Operatorem marki ON SITE jest DYŻUREK sp. z o.o.",
   notFoundTitle: "Nie ma takiej strony.",
   notFoundCta: "Wróć na stronę główną",
-  footer:
-    "ON SITE wynajmuje sprzęt i zapewnia praktyczne wsparcie przy produkcjach, wydarzeniach i prywatnych okazjach.",
+  footer: "ON SITE wynajmuje wyposażenie na wydarzenia. Zaczynamy od stołów i krzeseł.",
   since: "od sierpnia 2024",
   types: [
     { id: "private", label: "Klient prywatny" },
@@ -84,11 +111,11 @@ const pl = {
 };
 
 const en: typeof pl = {
-  metaTitle: "ON SITE — Equipment rental for events",
+  metaTitle: "ON SITE — Tables and chairs for events",
   metaDescription:
-    "Equipment rental catalogue for productions, events and private occasions. No prices in the catalogue.",
+    "Rental of basic equipment for agencies, companies and private clients. We start with tables and chairs.",
   brand: "ON SITE",
-  navEquipment: "Equipment",
+  navEquipment: "Offer",
   navAbout: "About",
   navContact: "Contact",
   navPrivacy: "Privacy",
@@ -96,13 +123,35 @@ const en: typeof pl = {
   langPl: "PL",
   langEn: "EN",
   menu: "Menu",
-  heroTitle: "Equipment for productions, events and private occasions.",
-  heroBody: "Choose a category and add items to your quote.",
-  heroCta: "View equipment",
-  categoriesTitle: "Categories",
-  equipmentTitle: "Equipment",
+  tagline: "Your plan. Our support.",
+  heroTitle: "Tables and chairs for events.",
+  heroBody: "Rental of basic equipment for agencies, companies and private clients.",
+  heroCta: "See the offer",
+  heroCtaSecondary: "Contact us",
+  optionsTitle: "Three ways to rent",
+  options: [
+    { title: "Rental", body: "You collect and return the equipment yourself." },
+    { title: "Rental with delivery", body: "We deliver and collect." },
+    {
+      title: "Rental with delivery and setup",
+      body: "We deliver, unload and set up on site.",
+    },
+  ],
+  offerTitle: "Offer",
+  offerBody: "Event furniture. Tables and chairs. Further categories will be added to the catalogue.",
+  howTitle: "How it works",
+  how: [
+    "You choose the equipment.",
+    "You say whether you will collect it or need delivery.",
+    "Setup on site is an option.",
+    "After the event you return the equipment, or we collect it.",
+  ],
+  whoTitle: "Who it is for",
+  who: ["Companies", "Event agencies", "Organisers", "Private clients", "Film production"],
+  categoriesTitle: "Catalogue",
+  equipmentTitle: "Offer",
   equipmentIntro:
-    "Choose a category, then set a quantity on the product page. My Quote is in the header. No prices.",
+    "Event furniture. Tables and chairs. Set a quantity on the product page. My Quote is in the menu. No prices.",
   details: "Details",
   sizeLabel: "Size",
   backCategory: "Back to the category",
@@ -136,17 +185,17 @@ const en: typeof pl = {
   copyRequest: "Copy text",
   copied: "Copied",
   aboutTitle: "About",
+  aboutLead: "ON SITE rents equipment for events. We start with tables and chairs.",
   aboutBody:
-    "ON SITE is the rental brand of DYŻUREK sp. z o.o. in Warsaw, since August 2024. Orkun and Zosia handle enquiries.",
+    "Behind that is experience from film sets and location logistics. That is where the habit of timing, transport and order comes from. We work with agencies, companies and private clients, not only with productions.",
   contactTitle: "Contact",
-  contactPeople: "Orkun and Zosia handle enquiries.",
+  contactBody:
+    "Write when and where the event is, and what you need. We will reply with availability.",
   emailLabel: "Email",
   emailPlaceholder: "[email]",
   phoneLabel: "Telephone",
   phonePlaceholder: "[telephone]",
-  serviceArea:
-    "Warsaw and surrounding areas. Other places in Poland depending on the project.",
-  contactCta: "Go to the quote",
+  contactCta: "My Quote",
   privacyTitle: "Privacy",
   privacyBody:
     "A privacy policy is not published yet. ON SITE is operated by DYŻUREK sp. z o.o.",
@@ -155,8 +204,7 @@ const en: typeof pl = {
     "Rental terms are not published yet. The catalogue has no prices. ON SITE is operated by DYŻUREK sp. z o.o.",
   notFoundTitle: "This page is not here.",
   notFoundCta: "Back to the homepage",
-  footer:
-    "ON SITE provides equipment rental and practical support for productions, events and private occasions.",
+  footer: "ON SITE rents equipment for events. We start with tables and chairs.",
   since: "since August 2024",
   types: [
     { id: "private", label: "Private customer" },
